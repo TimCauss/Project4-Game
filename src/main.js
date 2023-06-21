@@ -1,29 +1,18 @@
-const config = {
-  width: 512,
-  height: 512,
-  backgroundColor: "#333333",
+import Phaser from "./lib/phaser.js";
+import Game from "./scenes/Game.js";
+
+export default new Phaser.Game({
   type: Phaser.AUTO,
-  parent: "bombermanGame",
-  scene: [],
-  scale: {
-    zoom: 2,
-  },
+  width: 800,
+  height: 600,
+  scene: [Game],
   physics: {
-    default: "matter",
-    matter: {
-      debug: true,
-      gravity: { y: 0 },
+    default: "arcade",
+    arcade: {
+      gravity: {
+        y: 200,
+      },
+      debug: false,
     },
   },
-  plugins: {
-    scene: [
-      {
-        plugin: PhaserMatterCollisionPlugin,
-        key: "matterCollision",
-        mapping: "matterCollision",
-      },
-    ],
-  },
-};
-
-new Phaser.Game(config);
+});
