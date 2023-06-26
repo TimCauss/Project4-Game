@@ -1,6 +1,7 @@
 # Project 4: Make a game in Javascript
 
 > Phaser 3 + TypeScript + Vite.js Template
+
 I've decided to use this template for my project [phaser3-vite-template](https://github.com/ourcade/phaser3-vite-template).. 
 I've used Phaser 3 before, but I've never used TypeScript or Vite.js. I'm excited to learn more about them and use them in my project. I'm excited to see how it compares to the other languages I've used.
 
