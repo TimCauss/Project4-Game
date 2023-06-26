@@ -60,8 +60,9 @@ Production files will be placed in the `dist` folder. Then upload those files to
     │   │   ├── map.tmx          // Tiled TMX file
     ├── src
     │   ├──consts
-    │   │  ├── SceneKeys.ts      // Scene keys enum
-    │   │  ├── TextureKeys.ts    // Texture keys enum
+    │   │  ├── MapKeys.ts        // Maps keys enum
+    │   │  ├── SceneKeys.ts      // Scenes keys enum
+    │   │  ├── TextureKeys.ts    // Textures keys enum
     │   ├──scenes
     │   │  ├── Game.ts           // Main game scene
     │   ├── main.ts              // Entry point
@@ -70,11 +71,7 @@ Production files will be placed in the `dist` folder. Then upload those files to
 ```
 
 TypeScript files are intended for the `src` folder. `main.ts` is the entry point referenced by `index.html`.
-
-Other than that there is no opinion on how you should structure your project.
-
-
-It is all up to you!
+`src` folder is the root folder for enum constants, scenes, and other TypeScript files.
 
 ## Static Assets
 
@@ -115,3 +112,32 @@ You can change the dev server's port number by modifying the `vite.config.ts` fi
 
 Change 8000 to whatever you want.
 
+## Colision debug method
+
+This method add a color layer to the layer walls where collision is true
+You can enable/disable this debug by change this.collisonDebug(true/false) in Game.ts
+
+```js
+create() 
+{
+ //...
+    // Debugging Method START------------------------------------
+    this.collisonDebug(true);
+    // Debugging Method END--------------------------------------
+}
+```
+
+You can change the layer color by modifying the `Game.ts` file. Look for the `collisonDebug` section:
+
+```js
+private collisonDebug(enabled: boolean) {
+    if (enabled) {
+      const debugGraphics = this.add.graphics().setAlpha(0.75);
+      this.map.renderDebug(debugGraphics, {
+        tileColor: null, // Color of non-colliding tiles
+        collidingTileColor: new Phaser.Display.Color(243, 134, 48, 255), // Color of colliding tiles
+        faceColor: new Phaser.Display.Color(40, 39, 37, 255), // Color of colliding face edges
+      });
+    }
+  }
+```

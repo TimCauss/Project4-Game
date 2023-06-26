@@ -25,10 +25,9 @@ export default class Game extends Phaser.Scene {
     this.wallsLayer.setCollisionByProperty({ collides: true });
 
     // Debugging Method START------------------------------------
-    this.collisonDebug(false);
+    this.collisonDebug(true);
     // Debugging Method END--------------------------------------
   }
-
 
   // Debugging Collision Method----------------------------------
   private collisonDebug(enabled: boolean) {
@@ -36,7 +35,7 @@ export default class Game extends Phaser.Scene {
       const debugGraphics = this.add.graphics().setAlpha(0.7);
       this.wallsLayer.renderDebug(debugGraphics, {
         tileColor: null,
-        collidingTileColor: new Phaser.Display.Color(243, 134, 48, 255),
+        collidingTileColor: new Phaser.Display.Color(255, 0, 0, 150),
         faceColor: new Phaser.Display.Color(40, 39, 37, 255),
       });
     }
