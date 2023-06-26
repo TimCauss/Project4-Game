@@ -53,14 +53,20 @@ Production files will be placed in the `dist` folder. Then upload those files to
     ├── dist
     ├── node_modules
     ├── public
+    │   ├── images
+    │   │   ├── tilemap.png      // Tiled tilemap image
+    │   ├── map
+    │   │   ├── dungeon01.json   // Tiled JSON file
+    │   │   ├── map.tmx          // Tiled TMX file
     ├── src
     │   ├──consts
-    │   │  ├── SceneKeys.ts
+    │   │  ├── SceneKeys.ts      // Scene keys enum
+    │   │  ├── TextureKeys.ts    // Texture keys enum
     │   ├──scenes
-    │   │  ├── Game.ts
-    │   ├── main.ts
-	├── index.html
-    ├── package.json
+    │   │  ├── Game.ts           // Main game scene
+    │   ├── main.ts              // Entry point
+	├── index.html               // Main HTML file
+    ├── package.json             // NPM package file
 ```
 
 TypeScript files are intended for the `src` folder. `main.ts` is the entry point referenced by `index.html`.

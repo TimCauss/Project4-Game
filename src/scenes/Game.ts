@@ -6,4 +6,8 @@ export default class Game extends Phaser.Scene {
   constructor() {
     super(SceneKeys.Game);
   }
+
+  create() {
+    
+  }
 }
