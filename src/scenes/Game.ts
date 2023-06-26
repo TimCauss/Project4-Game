@@ -1,6 +1,9 @@
-import Phaser, { Scene } from "phaser";
+import Phaser from "phaser";
 
+// enum import start----------------------------------
+import TextureKeys from "../consts/TextureKeys";
 import SceneKeys from "../consts/SceneKeys";
+// enum import end-------------------------------------------
 
 export default class Game extends Phaser.Scene {
   constructor() {
@@ -8,6 +11,6 @@ export default class Game extends Phaser.Scene {
   }
 
   create() {
-    
+    this.add.image(100, 100, TextureKeys.Tiles);
   }
 }
