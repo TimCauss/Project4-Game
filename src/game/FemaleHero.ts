@@ -12,9 +12,8 @@ export default class FemaleHero extends Phaser.GameObjects.Container {
   constructor(scene: Phaser.Scene, x: number, y: number) {
     super(scene, x, y);
 
-    //Get CursorKeys Instance
-    if (!scene.input.keyboard) return;
-    this.cursors = scene.input.keyboard.createCursorKeys();
+    //Create Keyboard Input:
+    this.cursors = scene.input.keyboard!.createCursorKeys();
 
     //Create FemaleHero Sprite:
     this.femaleHero = scene.add
@@ -48,7 +47,12 @@ export default class FemaleHero extends Phaser.GameObjects.Container {
     if (!this.cursors || !this.femaleHero) {
       return;
     }
+
+    //listen keyboard input:
+    
+
     //LEFT(Walk & Run):
+
     if (this.cursors.left?.isDown) {
       //Return sprite:
       this.femaleHero.scaleX = -1;
@@ -61,7 +65,6 @@ export default class FemaleHero extends Phaser.GameObjects.Container {
         //Set velocity to left
         body.setVelocityX(-walkSpeed);
       }
-
       //RIGHT
     } else if (this.cursors.right?.isDown) {
       this.femaleHero.scaleX = 1;
