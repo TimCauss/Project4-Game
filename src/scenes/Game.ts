@@ -34,8 +34,10 @@ export default class Game extends Phaser.Scene {
     // Debugging Method END--------------------------------------
 
     //Adding HERO:-----------------------------------------------
-    const hero = new FemaleHero(this, 216, 8);
+    const hero = new FemaleHero(this, 231, 48);
+
     this.add.existing(hero);
+
 
     const body = hero.body as Phaser.Physics.Arcade.Body;
   }
