@@ -141,6 +141,32 @@ export default class Preloader extends Phaser.Scene {
     });
     //FemaleHero Animations END-----------------------------------------
 
+    //LizardGreen Animations START--------------------------------------
+    //IDLE
+    this.anims.create({
+      key: AnimationKeys.LizardGreenIdle,
+      frames: this.anims.generateFrameNames(TextureKeys.LizardGreen, {
+        start: 0,
+        end: 3,
+        prefix: "lizard_m_idle_anim_f",
+        suffix: ".png",
+      }),
+      frameRate: 6,
+      repeat: -1,
+    });
+    //IDLE
+    this.anims.create({
+      key: AnimationKeys.LizardGreenRun,
+      frames: this.anims.generateFrameNames(TextureKeys.LizardGreen, {
+        start: 0,
+        end: 3,
+        prefix: "lizard_m_run_anim_f",
+        suffix: ".png",
+      }),
+      frameRate: 6,
+      repeat: -1,
+    });
+
     //Launching Scene:--------------------------------------------------
     this.scene.start(SceneKeys.Game);
   }

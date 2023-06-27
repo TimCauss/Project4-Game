@@ -5,6 +5,7 @@ import TextureKeys from "../consts/TextureKeys";
 import MapKeys from "../consts/MapKeys";
 import SceneKeys from "../consts/SceneKeys";
 import FemaleHero from "../game/FemaleHero";
+import LizardGreen from "../game/LizardGreen";
 // enum import end-------------------------------------------
 
 export default class Game extends Phaser.Scene {
@@ -35,8 +36,11 @@ export default class Game extends Phaser.Scene {
 
     //Adding HERO:-----------------------------------------------
     const hero = new FemaleHero(this, 231, 48);
-
     this.add.existing(hero);
+
+    //Adding GREEN LIZARD :--------------------------------------
+    const ennemi = new LizardGreen(this, width * 0.5, height * 0.5);
+    this.add.existing(ennemi);
     // Collider Settings-----------------------------------------
     this.physics.add.collider(hero, this.wallsLayer);
 
