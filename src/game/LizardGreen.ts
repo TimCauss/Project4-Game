@@ -1,6 +1,5 @@
 import Phaser from "phaser";
 
-import TextureKeys from "../consts/TextureKeys";
 import EnemyAnimsKeys from "../consts/EnemyAnimsKeys";
 
 export default class LizardGreen extends Phaser.Physics.Arcade.Sprite {
