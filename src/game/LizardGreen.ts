@@ -3,30 +3,26 @@ import Phaser from "phaser";
 import TextureKeys from "../consts/TextureKeys";
 import EnemyAnimsKeys from "../consts/EnemyAnimsKeys";
 
-export default class LizardGreen extends Phaser.GameObjects.Container {
-  private greenLizard: Phaser.GameObjects.Sprite;
+export default class LizardGreen extends Phaser.Physics.Arcade.Sprite {
 
-  constructor(scene: Phaser.Scene, x: number, y: number) {
-    super(scene, x, y);
+  constructor(scene: Phaser.Scene, x: number, y: number, texture: string, frame: number) {
+    super(scene, x, y, texture, frame);
 
-    //Create GreenLizard Sprite:
-    this.greenLizard = scene.add
-      .sprite(0, 0, TextureKeys.LizardGreen)
-      .setOrigin(0.5, 1);
-
-    this.add(this.greenLizard);
-
-    this.greenLizard.anims.play(EnemyAnimsKeys.LizardGreenRun);
-
+    //Create the class & adding it an animation
     scene.physics.add.existing(this);
+    this.anims.play(EnemyAnimsKeys.LizardGreenIdle);
 
+    //Physics
     const body = this.body as Phaser.Physics.Arcade.Body;
-
     body.debugBodyColor = 0xff0000;
-    body.setSize(this.greenLizard.width, this.greenLizard.height * 0.8);
+    body.setSize(this.width, this.height * 0.8);
     body.setOffset(
-      -this.greenLizard.width * 0.45,
-      -this.greenLizard.height * 0.78
+      this.width*0.05,
+      this.height*0.25
     );
+  }
+
+  preUpdate(t: number, dt: number) {
+    super.preUpdate(t, dt);
   }
 }
