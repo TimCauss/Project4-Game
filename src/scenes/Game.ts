@@ -41,8 +41,9 @@ export default class Game extends Phaser.Scene {
     this.physics.add.collider(hero, this.wallsLayer);
 
     //Cameras Settings-------------------------------------------
-    this.cameras.main.startFollow(hero);
-    this.cameras.main.setBounds(0, 0, width, height);
+    this.cameras.main.startFollow(hero, true);
+    //
+    // this.cameras.main.setBounds(0, 0, width, height);
   }
 
   // Debugging Collision Method----------------------------------

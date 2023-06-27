@@ -66,24 +66,23 @@ export default class FemaleHero extends Phaser.GameObjects.Container {
       body.setOffset(-this.femaleHero.width * 0.25, -13);
       //UP
     } else if (this.cursors.up?.isDown) {
-      this.femaleHero.scaleX = 1;
       this.femaleHero.anims.play(AnimationKeys.fHeroWalkUp, true);
       body.setVelocityY(-speed);
       body.setSize(17, this.femaleHero.height * 0.3);
       body.setOffset(-this.femaleHero.width * 0.25, -13);
       //DOWN
     } else if (this.cursors.down?.isDown) {
-      this.femaleHero.scaleX = 1;
       this.femaleHero.anims.play(AnimationKeys.fHeroWalkDown, true);
       body.setVelocityY(speed);
       body.setSize(17, this.femaleHero.height * 0.3);
       body.setOffset(-this.femaleHero.width * 0.25, -13);
     } else {
-      this.femaleHero.scaleX = 1;
+      const parts = this.femaleHero.anims.currentAnim.key.split("-");
+      parts[1] = "idle";
       body.setVelocity(0, 0);
       body.setSize(17, this.femaleHero.height * 0.3);
       body.setOffset(-this.femaleHero.width * 0.25, -13);
-      this.femaleHero.play(AnimationKeys.fHeroIdleDown);
+      this.femaleHero.play(parts.join("-"));
     }
     //KEYBOARD INPUT END-----------------------------------------------
   }
