@@ -31,45 +31,51 @@ export default class FemaleHero extends Phaser.GameObjects.Container {
     const body = this.body as Phaser.Physics.Arcade.Body;
     body.setSize(17, this.femaleHero.height * 0.3);
     body.setOffset(-this.femaleHero.width * 0.25, -13);
+
+    //setting collide with walls:
   }
 
   preUpdate() {
     const body = this.body as Phaser.Physics.Arcade.Body;
 
-    //KEYBOARD START:----------------------------------------------
+    //KEYBOARD INPUT START:----------------------------------------------
+    //
+    //Speed setting:
+    const speed = 50;
+
     if (!this.cursors || !this.femaleHero) {
       return;
     }
-    //LEFT-----------------------------------------
+    //LEFT
     if (this.cursors.left?.isDown) {
       //Return sprite:
       this.femaleHero.scaleX = -1;
       //Launch animation
       this.femaleHero.anims.play(AnimationKeys.fHeroWalkSide, true);
       //Set velocity to left
-      body.setVelocityX(-50);
+      body.setVelocityX(-speed);
       //Change Hitbox size to fit the animation:
       body.setSize(12, this.femaleHero.height * 0.3);
       body.setOffset(-this.femaleHero.width * 0.12, -13);
-      //RIGHT---------------------------------------
+      //RIGHT
     } else if (this.cursors.right?.isDown) {
       this.femaleHero.scaleX = 1;
       this.femaleHero.anims.play(AnimationKeys.fHeroWalkSide, true);
-      body.setVelocityX(50);
+      body.setVelocityX(speed);
       body.setSize(12, this.femaleHero.height * 0.3);
       body.setOffset(-this.femaleHero.width * 0.25, -13);
-      //UP--------------------------------------------
+      //UP
     } else if (this.cursors.up?.isDown) {
       this.femaleHero.scaleX = 1;
       this.femaleHero.anims.play(AnimationKeys.fHeroWalkUp, true);
-      body.setVelocityY(-50);
+      body.setVelocityY(-speed);
       body.setSize(17, this.femaleHero.height * 0.3);
       body.setOffset(-this.femaleHero.width * 0.25, -13);
-      //DOWN------------------------------------------
+      //DOWN
     } else if (this.cursors.down?.isDown) {
       this.femaleHero.scaleX = 1;
       this.femaleHero.anims.play(AnimationKeys.fHeroWalkDown, true);
-      body.setVelocityY(50);
+      body.setVelocityY(speed);
       body.setSize(17, this.femaleHero.height * 0.3);
       body.setOffset(-this.femaleHero.width * 0.25, -13);
     } else {
@@ -79,5 +85,6 @@ export default class FemaleHero extends Phaser.GameObjects.Container {
       body.setOffset(-this.femaleHero.width * 0.25, -13);
       this.femaleHero.play(AnimationKeys.fHeroIdleDown);
     }
+    //KEYBOARD INPUT END-----------------------------------------------
   }
 }
