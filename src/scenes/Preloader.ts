@@ -84,9 +84,9 @@ export default class Preloader extends Phaser.Scene {
         start: 1,
         end: 8,
         prefix: "run-down-",
-        suffix: "png",
+        suffix: ".png",
       }),
-      frameRate: 10,
+      frameRate: 15,
       repeat: -1,
     });
     //WALK UP:---------------------------------------------------------
@@ -111,7 +111,7 @@ export default class Preloader extends Phaser.Scene {
         prefix: "run-up-",
         suffix: ".png",
       }),
-      frameRate: 10,
+      frameRate: 15,
       repeat: -1,
     });
     //WALK SIDE:-------------------------------------------------------
@@ -136,7 +136,7 @@ export default class Preloader extends Phaser.Scene {
         prefix: "run-side-",
         suffix: ".png",
       }),
-      frameRate: 10,
+      frameRate: 15,
       repeat: -1,
     });
     //FemaleHero Animations END-----------------------------------------
