@@ -4,6 +4,7 @@ import Phaser from "phaser";
 import TextureKeys from "../consts/TextureKeys";
 import MapKeys from "../consts/MapKeys";
 import SceneKeys from "../consts/SceneKeys";
+import FemaleHero from "../game/FemaleHero";
 // enum import end-------------------------------------------
 
 export default class Game extends Phaser.Scene {
@@ -14,6 +15,10 @@ export default class Game extends Phaser.Scene {
   private wallsLayer!: Phaser.Tilemaps.TilemapLayer;
 
   create() {
+    //store the width and height of the game screen:
+    const width = this.scale.width;
+    const height = this.scale.height;
+
     // Creating tilemap instance using .make.timeMap() method
     const map = this.make.tilemap({ key: MapKeys.Level1 });
     const tileset = map.addTilesetImage("tyniDungeon", TextureKeys.Tiles);
@@ -25,8 +30,10 @@ export default class Game extends Phaser.Scene {
     this.wallsLayer.setCollisionByProperty({ collides: true });
 
     // Debugging Method START------------------------------------
-    this.collisonDebug(true);
+    this.collisonDebug(false);
     // Debugging Method END--------------------------------------
+
+    const hero = new FemaleHero(this, 232, 23 );
   }
 
   // Debugging Collision Method----------------------------------
