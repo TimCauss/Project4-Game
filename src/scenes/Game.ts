@@ -6,7 +6,8 @@ import MapKeys from "../consts/MapKeys";
 import SceneKeys from "../consts/SceneKeys";
 import FemaleHero from "../game/FemaleHero";
 import LizardGreen from "../game/LizardGreen";
-// enum import end-------------------------------------------
+// enum import end------------------------------------
+
 
 export default class Game extends Phaser.Scene {
   constructor() {
