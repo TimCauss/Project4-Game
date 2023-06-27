@@ -20,6 +20,12 @@ export default class Preloader extends Phaser.Scene {
       "./public/images/HeroFemaleSprite.png",
       "./public/images/HeroFemaleSprite.json"
     );
+
+    this.load.atlas(
+      TextureKeys.LizardGreen,
+      "./public/images/enemies/lizard_green.png",
+      "./public/images/enemies/lizard_green.json"
+    );
   }
 
   create() {

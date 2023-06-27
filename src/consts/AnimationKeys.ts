@@ -10,7 +10,11 @@ enum AnimationKeys {
   fHeroWalkDown = "hero-walk-down",
   fHeroWalkUp = "hero-walk-up",
   fHeroWalkSide = "hero-walk-side",
-  //Female Hero Animations End-------------
+  //Female Hero Animations End---------------
+  //Lizard Green Animations Start------------
+  LizardGreenHit = "lizard-gree-hit",
+  LizardGreenIdle = "lizard-gree-idle",
+  LizardGreenRun = "lizard-gree-run",
 }
 
 export default AnimationKeys;

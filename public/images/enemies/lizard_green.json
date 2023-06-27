@@ -1,0 +1,84 @@
+{"frames": {
+
+"lizard_m_hit_anim_f0.png":
+{
+	"frame": {"x":1,"y":1,"w":16,"h":21},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":5,"w":16,"h":21},
+	"sourceSize": {"w":16,"h":28}
+},
+"lizard_m_idle_anim_f0.png":
+{
+	"frame": {"x":1,"y":70,"w":16,"h":20},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":8,"w":16,"h":20},
+	"sourceSize": {"w":16,"h":28}
+},
+"lizard_m_idle_anim_f1.png":
+{
+	"frame": {"x":1,"y":92,"w":16,"h":20},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":8,"w":16,"h":20},
+	"sourceSize": {"w":16,"h":28}
+},
+"lizard_m_idle_anim_f2.png":
+{
+	"frame": {"x":1,"y":177,"w":16,"h":17},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":11,"w":16,"h":17},
+	"sourceSize": {"w":16,"h":28}
+},
+"lizard_m_idle_anim_f3.png":
+{
+	"frame": {"x":1,"y":136,"w":16,"h":19},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":9,"w":16,"h":19},
+	"sourceSize": {"w":16,"h":28}
+},
+"lizard_m_run_anim_f0.png":
+{
+	"frame": {"x":1,"y":114,"w":16,"h":20},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":8,"w":16,"h":20},
+	"sourceSize": {"w":16,"h":28}
+},
+"lizard_m_run_anim_f1.png":
+{
+	"frame": {"x":1,"y":24,"w":16,"h":21},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":6,"w":16,"h":21},
+	"sourceSize": {"w":16,"h":28}
+},
+"lizard_m_run_anim_f2.png":
+{
+	"frame": {"x":1,"y":47,"w":16,"h":21},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":7,"w":16,"h":21},
+	"sourceSize": {"w":16,"h":28}
+},
+"lizard_m_run_anim_f3.png":
+{
+	"frame": {"x":1,"y":157,"w":16,"h":18},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":10,"w":16,"h":18},
+	"sourceSize": {"w":16,"h":28}
+}},
+"meta": {
+	"app": "https://www.codeandweb.com/texturepacker",
+	"version": "1.0",
+	"image": "lizard_green.png",
+	"format": "RGBA8888",
+	"size": {"w":18,"h":195},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:8e7a0214e2e6a873ce0dfc2abefeaf81:f5311b9342ec36ea8dd7dcbb94fa4d57:cc855a6aafae5445389b7155c34970d4$"
+}
+}
