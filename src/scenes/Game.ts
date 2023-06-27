@@ -37,9 +37,12 @@ export default class Game extends Phaser.Scene {
     const hero = new FemaleHero(this, 231, 48);
 
     this.add.existing(hero);
+    // Collider Settings-----------------------------------------
+    this.physics.add.collider(hero, this.wallsLayer);
 
-
-    const body = hero.body as Phaser.Physics.Arcade.Body;
+    //Cameras Settings-------------------------------------------
+    this.cameras.main.startFollow(hero);
+    this.cameras.main.setBounds(0, 0, width, height);
   }
 
   // Debugging Collision Method----------------------------------
