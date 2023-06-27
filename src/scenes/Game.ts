@@ -33,6 +33,7 @@ export default class Game extends Phaser.Scene {
     this.collisonDebug(false);
     // Debugging Method END--------------------------------------
 
+    //Adding HERO:-----------------------------------------------
     const hero = new FemaleHero(this, 232, 23 );
   }
 

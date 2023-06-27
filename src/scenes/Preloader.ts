@@ -35,6 +35,20 @@ export default class Preloader extends Phaser.Scene {
       ],
     });
 
+    //FemaleHero Animation Walk Down:-----------------------------------
+    this.anims.create({
+      key: AnimationKeys.fHeroWalkDown,
+      //generate frames:
+      frames: this.anims.generateFrameNames(TextureKeys.FemaleHero, {
+        start: 1,
+        end: 8,
+        prefix: "walk-down-",
+        suffix: ".png",
+      }),
+      frameRate: 10,
+      repeat: -1,
+    });
+
     //Launching Scene:--------------------------------------------------
     this.scene.start(SceneKeys.Game);
   }
