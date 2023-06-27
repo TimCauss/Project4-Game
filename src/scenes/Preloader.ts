@@ -6,6 +6,7 @@ import AnimationKeys from "../consts/AnimationKeys";
 
 // anims import Start---------------------------------
 import { createLizardAnims } from "../anims/EnemyAnims";
+import { createHeroAnims } from "../anims/HeroAnims";
 
 export default class Preloader extends Phaser.Scene {
   constructor() {
@@ -34,119 +35,7 @@ export default class Preloader extends Phaser.Scene {
   create() {
     //Lizard anims call:
     createLizardAnims(this.anims);
-
-    
-    //FemaleHero Animation START---------------------------------------
-    //IDLE DOWN:-------------------------------------------------------
-    this.anims.create({
-      key: AnimationKeys.fHeroIdleDown,
-      //generate frame:
-      frames: [
-        {
-          key: TextureKeys.FemaleHero,
-          frame: "idle.png",
-        },
-      ],
-    });
-    //IDLE UP:-------------------------------------------------------
-    this.anims.create({
-      key: AnimationKeys.fHeroIdleUp,
-      //generate frame:
-      frames: [
-        {
-          key: TextureKeys.FemaleHero,
-          frame: "walk-up-3.png",
-        },
-      ],
-    });
-    //IDLE SIDE:-------------------------------------------------------
-    this.anims.create({
-      key: AnimationKeys.fHeroIdleSide,
-      //generate frame:
-      frames: [
-        {
-          key: TextureKeys.FemaleHero,
-          frame: "walk-side-3.png",
-        },
-      ],
-    });
-
-    //WALK DOWN:-------------------------------------------------------
-    this.anims.create({
-      key: AnimationKeys.fHeroWalkDown,
-      //generate frames:
-      frames: this.anims.generateFrameNames(TextureKeys.FemaleHero, {
-        start: 1,
-        end: 8,
-        prefix: "walk-down-",
-        suffix: ".png",
-      }),
-      frameRate: 10,
-      repeat: -1,
-    });
-    //RUN DOWN:--------------------------------------------------------
-    this.anims.create({
-      key: AnimationKeys.fHeroRunDown,
-      frames: this.anims.generateFrameNames(TextureKeys.FemaleHero, {
-        start: 1,
-        end: 8,
-        prefix: "run-down-",
-        suffix: ".png",
-      }),
-      frameRate: 15,
-      repeat: -1,
-    });
-    //WALK UP:---------------------------------------------------------
-    this.anims.create({
-      key: AnimationKeys.fHeroWalkUp,
-      //generate frames:
-      frames: this.anims.generateFrameNames(TextureKeys.FemaleHero, {
-        start: 1,
-        end: 8,
-        prefix: "walk-up-",
-        suffix: ".png",
-      }),
-      frameRate: 10,
-      repeat: -1,
-    });
-    //RUN UP:---------------------------------------------------------
-    this.anims.create({
-      key: AnimationKeys.fHeroRunUp,
-      frames: this.anims.generateFrameNames(TextureKeys.FemaleHero, {
-        start: 1,
-        end: 8,
-        prefix: "run-up-",
-        suffix: ".png",
-      }),
-      frameRate: 15,
-      repeat: -1,
-    });
-    //WALK SIDE:-------------------------------------------------------
-    this.anims.create({
-      key: AnimationKeys.fHeroWalkSide,
-      //generate frames:
-      frames: this.anims.generateFrameNames(TextureKeys.FemaleHero, {
-        start: 1,
-        end: 8,
-        prefix: "walk-side-",
-        suffix: ".png",
-      }),
-      frameRate: 10,
-      repeat: -1,
-    });
-    //RUN SIDE:---------------------------------------------------------
-    this.anims.create({
-      key: AnimationKeys.fHeroRunSide,
-      frames: this.anims.generateFrameNames(TextureKeys.FemaleHero, {
-        start: 1,
-        end: 8,
-        prefix: "run-side-",
-        suffix: ".png",
-      }),
-      frameRate: 15,
-      repeat: -1,
-    });
-    //FemaleHero Animations END-----------------------------------------
+    createHeroAnims(this.anims);
 
     //Launching Scene:--------------------------------------------------
     this.scene.start(SceneKeys.Game);

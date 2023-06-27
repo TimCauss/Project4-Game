@@ -29,7 +29,7 @@ export default class FemaleHero extends Phaser.GameObjects.Container {
 
     //Adjusting physics body (hitbox)size, color and offset:
     const body = this.body as Phaser.Physics.Arcade.Body;
-    body.debugBodyColor = 0x3cda15  
+    body.debugBodyColor = 0x3cda15;
     body.setSize(17, this.femaleHero.height * 0.6);
     body.setOffset(-this.femaleHero.width * 0.25, -23);
 
