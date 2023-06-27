@@ -1,14 +1,14 @@
 import Phaser from "phaser";
 
 //enum import:
-import AnimationKeys from "../consts/AnimationKeys";
+import HeroAnimsKeys from "../consts/HeroAnimsKeys";
 import TextureKeys from "../consts/TextureKeys";
 
 const createHeroAnims = (anims: Phaser.Animations.AnimationManager) => {
   //FemaleHero Animation START---------------------------------------
   //IDLE DOWN:-------------------------------------------------------
   anims.create({
-    key: AnimationKeys.fHeroIdleDown,
+    key: HeroAnimsKeys.fHeroIdleDown,
     //generate frame:
     frames: [
       {
@@ -19,7 +19,7 @@ const createHeroAnims = (anims: Phaser.Animations.AnimationManager) => {
   });
   //IDLE UP:-------------------------------------------------------
   anims.create({
-    key: AnimationKeys.fHeroIdleUp,
+    key: HeroAnimsKeys.fHeroIdleUp,
     //generate frame:
     frames: [
       {
@@ -30,7 +30,7 @@ const createHeroAnims = (anims: Phaser.Animations.AnimationManager) => {
   });
   //IDLE SIDE:-------------------------------------------------------
   anims.create({
-    key: AnimationKeys.fHeroIdleSide,
+    key: HeroAnimsKeys.fHeroIdleSide,
     //generate frame:
     frames: [
       {
@@ -42,7 +42,7 @@ const createHeroAnims = (anims: Phaser.Animations.AnimationManager) => {
 
   //WALK DOWN:-------------------------------------------------------
   anims.create({
-    key: AnimationKeys.fHeroWalkDown,
+    key: HeroAnimsKeys.fHeroWalkDown,
     //generate frames:
     frames: anims.generateFrameNames(TextureKeys.FemaleHero, {
       start: 1,
@@ -55,7 +55,7 @@ const createHeroAnims = (anims: Phaser.Animations.AnimationManager) => {
   });
   //RUN DOWN:--------------------------------------------------------
   anims.create({
-    key: AnimationKeys.fHeroRunDown,
+    key: HeroAnimsKeys.fHeroRunDown,
     frames: anims.generateFrameNames(TextureKeys.FemaleHero, {
       start: 1,
       end: 8,
@@ -67,7 +67,7 @@ const createHeroAnims = (anims: Phaser.Animations.AnimationManager) => {
   });
   //WALK UP:---------------------------------------------------------
   anims.create({
-    key: AnimationKeys.fHeroWalkUp,
+    key: HeroAnimsKeys.fHeroWalkUp,
     //generate frames:
     frames: anims.generateFrameNames(TextureKeys.FemaleHero, {
       start: 1,
@@ -80,7 +80,7 @@ const createHeroAnims = (anims: Phaser.Animations.AnimationManager) => {
   });
   //RUN UP:---------------------------------------------------------
   anims.create({
-    key: AnimationKeys.fHeroRunUp,
+    key: HeroAnimsKeys.fHeroRunUp,
     frames: anims.generateFrameNames(TextureKeys.FemaleHero, {
       start: 1,
       end: 8,
@@ -92,7 +92,7 @@ const createHeroAnims = (anims: Phaser.Animations.AnimationManager) => {
   });
   //WALK SIDE:-------------------------------------------------------
   anims.create({
-    key: AnimationKeys.fHeroWalkSide,
+    key: HeroAnimsKeys.fHeroWalkSide,
     //generate frames:
     frames: anims.generateFrameNames(TextureKeys.FemaleHero, {
       start: 1,
@@ -105,7 +105,7 @@ const createHeroAnims = (anims: Phaser.Animations.AnimationManager) => {
   });
   //RUN SIDE:---------------------------------------------------------
   anims.create({
-    key: AnimationKeys.fHeroRunSide,
+    key: HeroAnimsKeys.fHeroRunSide,
     frames: anims.generateFrameNames(TextureKeys.FemaleHero, {
       start: 1,
       end: 8,

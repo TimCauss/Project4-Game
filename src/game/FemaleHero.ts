@@ -1,7 +1,7 @@
 import Phaser from "phaser";
 
 import TextureKeys from "../consts/TextureKeys";
-import AnimationKeys from "../consts/AnimationKeys";
+import HeroAnimsKeys from "../consts/HeroAnimsKeys";
 
 //Preparing First Hero Class:
 export default class FemaleHero extends Phaser.GameObjects.Container {
@@ -20,7 +20,7 @@ export default class FemaleHero extends Phaser.GameObjects.Container {
     this.femaleHero = scene.add
       .sprite(0, 0, TextureKeys.FemaleHero)
       .setOrigin(0.5, 1)
-      .play(AnimationKeys.fHeroIdleDown);
+      .play(HeroAnimsKeys.fHeroIdleDown);
 
     //Add the femaleHero as a child of Container
     this.add(this.femaleHero);
@@ -53,11 +53,11 @@ export default class FemaleHero extends Phaser.GameObjects.Container {
       //Return sprite:
       this.femaleHero.scaleX = -1;
       if (this.cursors.shift?.isDown) {
-        this.femaleHero.anims.play(AnimationKeys.fHeroRunSide, true);
+        this.femaleHero.anims.play(HeroAnimsKeys.fHeroRunSide, true);
         body.setVelocity(-runSpeed, 0);
       } else {
         //Launch animation
-        this.femaleHero.anims.play(AnimationKeys.fHeroWalkSide, true);
+        this.femaleHero.anims.play(HeroAnimsKeys.fHeroWalkSide, true);
         //Set velocity to left
         body.setVelocityX(-walkSpeed);
       }
@@ -66,30 +66,30 @@ export default class FemaleHero extends Phaser.GameObjects.Container {
     } else if (this.cursors.right?.isDown) {
       this.femaleHero.scaleX = 1;
       if (this.cursors.shift?.isDown) {
-        this.femaleHero.anims.play(AnimationKeys.fHeroRunSide, true);
+        this.femaleHero.anims.play(HeroAnimsKeys.fHeroRunSide, true);
         body.setVelocity(runSpeed, 0);
       } else {
-        this.femaleHero.anims.play(AnimationKeys.fHeroWalkSide, true);
+        this.femaleHero.anims.play(HeroAnimsKeys.fHeroWalkSide, true);
         body.setVelocityX(walkSpeed);
       }
       //UP
     } else if (this.cursors.up?.isDown) {
       this.femaleHero.scaleX = 1;
       if (this.cursors.shift?.isDown) {
-        this.femaleHero.anims.play(AnimationKeys.fHeroRunUp, true);
+        this.femaleHero.anims.play(HeroAnimsKeys.fHeroRunUp, true);
         body.setVelocity(0, -runSpeed);
       } else {
-        this.femaleHero.anims.play(AnimationKeys.fHeroWalkUp, true);
+        this.femaleHero.anims.play(HeroAnimsKeys.fHeroWalkUp, true);
         body.setVelocityY(-walkSpeed);
       }
       //DOWN
     } else if (this.cursors.down?.isDown) {
       this.femaleHero.scaleX = 1;
       if (this.cursors.shift?.isDown) {
-        this.femaleHero.anims.play(AnimationKeys.fHeroRunDown, true);
+        this.femaleHero.anims.play(HeroAnimsKeys.fHeroRunDown, true);
         body.setVelocity(0, runSpeed);
       } else {
-        this.femaleHero.anims.play(AnimationKeys.fHeroWalkDown, true);
+        this.femaleHero.anims.play(HeroAnimsKeys.fHeroWalkDown, true);
         body.setVelocityY(walkSpeed);
       }
     } else {

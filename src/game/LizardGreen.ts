@@ -1,6 +1,7 @@
 import Phaser from "phaser";
 
 import TextureKeys from "../consts/TextureKeys";
+import EnemyAnimsKeys from "../consts/EnemyAnimsKeys";
 
 export default class LizardGreen extends Phaser.GameObjects.Container {
   private greenLizard: Phaser.GameObjects.Sprite;
@@ -11,9 +12,11 @@ export default class LizardGreen extends Phaser.GameObjects.Container {
     //Create GreenLizard Sprite:
     this.greenLizard = scene.add
       .sprite(0, 0, TextureKeys.LizardGreen)
-      .setOrigin(0.5, 1)
+      .setOrigin(0.5, 1);
 
     this.add(this.greenLizard);
+
+    this.greenLizard.anims.play(EnemyAnimsKeys.LizardGreenIdle);
 
     scene.physics.add.existing(this);
 

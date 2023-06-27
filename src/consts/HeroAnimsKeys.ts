@@ -1,4 +1,4 @@
-enum AnimationKeys {
+enum HeroAnimsKeys {
   //Female Hero Animations Start-------------
   fHeroIdleDown = "hero-idle-down",
   fHeroIdleUp = "hero-idle-up",
@@ -11,10 +11,6 @@ enum AnimationKeys {
   fHeroWalkUp = "hero-walk-up",
   fHeroWalkSide = "hero-walk-side",
   //Female Hero Animations End---------------
-  //Lizard Green Animations Start------------
-  LizardGreenHit = "lizard-gree-hit",
-  LizardGreenIdle = "lizard-gree-idle",
-  LizardGreenRun = "lizard-gree-run",
 }
 
-export default AnimationKeys;
+export default HeroAnimsKeys;

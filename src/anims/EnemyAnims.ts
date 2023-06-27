@@ -1,12 +1,12 @@
 import Phaser from "phaser";
-import AnimationKeys from "../consts/AnimationKeys";
+import EnemyAnimsKeys from "../consts/EnemyAnimsKeys";
 import TextureKeys from "../consts/TextureKeys";
 
 const createLizardAnims = (anims: Phaser.Animations.AnimationManager) => {
   //LizardGreen Animations START--------------------------------------
   //IDLE
   anims.create({
-    key: AnimationKeys.LizardGreenIdle,
+    key: EnemyAnimsKeys.LizardGreenIdle,
     frames: anims.generateFrameNames(TextureKeys.LizardGreen, {
       start: 0,
       end: 3,
@@ -18,7 +18,7 @@ const createLizardAnims = (anims: Phaser.Animations.AnimationManager) => {
   });
   //IDLE
   anims.create({
-    key: AnimationKeys.LizardGreenRun,
+    key: EnemyAnimsKeys.LizardGreenRun,
     frames: anims.generateFrameNames(TextureKeys.LizardGreen, {
       start: 0,
       end: 3,
