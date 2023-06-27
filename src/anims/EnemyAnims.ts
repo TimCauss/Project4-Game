@@ -25,7 +25,7 @@ const createLizardAnims = (anims: Phaser.Animations.AnimationManager) => {
       prefix: "lizard_m_run_anim_f",
       suffix: ".png",
     }),
-    frameRate: 6,
+    frameRate: 12,
     repeat: -1,
   });
 };

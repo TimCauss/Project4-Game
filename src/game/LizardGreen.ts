@@ -16,7 +16,7 @@ export default class LizardGreen extends Phaser.GameObjects.Container {
 
     this.add(this.greenLizard);
 
-    this.greenLizard.anims.play(EnemyAnimsKeys.LizardGreenIdle);
+    this.greenLizard.anims.play(EnemyAnimsKeys.LizardGreenRun);
 
     scene.physics.add.existing(this);
 

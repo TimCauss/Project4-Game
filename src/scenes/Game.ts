@@ -28,7 +28,10 @@ export default class Game extends Phaser.Scene {
 
     map.createLayer("Ground", tileset as Phaser.Tilemaps.Tileset);
 
-    this.wallsLayer = map.createLayer("Walls", tileset as Phaser.Tilemaps.Tileset)!;
+    this.wallsLayer = map.createLayer(
+      "Walls",
+      tileset as Phaser.Tilemaps.Tileset
+    )!;
 
     this.wallsLayer.setCollisionByProperty({ collides: true });
 
@@ -40,15 +43,17 @@ export default class Game extends Phaser.Scene {
     const hero = new FemaleHero(this, 231, 48);
     this.add.existing(hero);
 
-    //Adding GREEN LIZARD :--------------------------------------
-    const ennemi = new LizardGreen(this, width * 0.5, height * 0.5);
-    this.add.existing(ennemi);
+    //Adding GREEN LIZARDS :--------------------------------------
+    const lizards = this.physics.add.group({
+      classType: LizardGreen,
+    });
+    lizards.get(width * 0.5, height * 0.5, "lizard");
+
     // Collider Settings-----------------------------------------
     this.physics.add.collider(hero, this.wallsLayer);
 
     //Cameras Settings-------------------------------------------
     this.cameras.main.startFollow(hero, true);
-
   }
 
   // Debugging Collision Method----------------------------------
