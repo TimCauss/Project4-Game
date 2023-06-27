@@ -1,6 +1,8 @@
 enum AnimationKeys {
   //Female Hero Animations Start-------------
-  fHeroIdle = 'female-hero-idle',
+  fHeroIdleDown = "female-hero-idle-down",
+  fHeroIdleUp = "female-hero-idle-up",
+  fHeroIdleSide = "female-hero-idle-side",
   fHeroFaint = "female-hero-faint",
   fHeroRunDown = "female-hero-run-down",
   fHeroRunUp = "female-hero-run-up",

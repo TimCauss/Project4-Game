@@ -14,7 +14,7 @@ export default class FemaleHero extends Phaser.GameObjects.Container {
     this.femaleHero = scene.add
       .sprite(232, 38, TextureKeys.FemaleHero)
       .setOrigin(0.5, 1)
-      .play(AnimationKeys.fHeroIdle);
+      .play(AnimationKeys.fHeroIdleDown);
 
     //Add the femaleHero as a child of Container
   }

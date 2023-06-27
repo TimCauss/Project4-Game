@@ -24,14 +24,36 @@ export default class Preloader extends Phaser.Scene {
 
   create() {
     //FemaleHero Animation START---------------------------------------
-    //IDLE:------------------------------------------------------------
+    //IDLE DOWN:-------------------------------------------------------
     this.anims.create({
-      key: AnimationKeys.fHeroIdle,
+      key: AnimationKeys.fHeroIdleDown,
       //generate frame:
       frames: [
         {
           key: TextureKeys.FemaleHero,
           frame: "idle.png",
+        },
+      ],
+    });
+    //IDLE UP:-------------------------------------------------------
+    this.anims.create({
+      key: AnimationKeys.fHeroIdleUp,
+      //generate frame:
+      frames: [
+        {
+          key: TextureKeys.FemaleHero,
+          frame: "walk-up-3.png",
+        },
+      ],
+    });
+    //IDLE SIDE:-------------------------------------------------------
+    this.anims.create({
+      key: AnimationKeys.fHeroIdleSide,
+      //generate frame:
+      frames: [
+        {
+          key: TextureKeys.FemaleHero,
+          frame: "walk-side-3.png",
         },
       ],
     });
