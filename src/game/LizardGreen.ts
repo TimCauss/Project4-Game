@@ -1,7 +1,6 @@
 import Phaser from "phaser";
 
 import TextureKeys from "../consts/TextureKeys";
-import AnimationKeys from "../consts/AnimationKeys";
 
 export default class LizardGreen extends Phaser.GameObjects.Container {
   private greenLizard: Phaser.GameObjects.Sprite;

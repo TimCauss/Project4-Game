@@ -8,7 +8,6 @@ import FemaleHero from "../game/FemaleHero";
 import LizardGreen from "../game/LizardGreen";
 // enum import end------------------------------------
 
-
 export default class Game extends Phaser.Scene {
   constructor() {
     super(SceneKeys.Game);
@@ -26,8 +25,10 @@ export default class Game extends Phaser.Scene {
     const tileset = map.addTilesetImage("tyniDungeon", TextureKeys.Tiles);
 
     // Creating layers using .createLayer() method
-    map.createLayer("Ground", tileset);
-    this.wallsLayer = map.createLayer("Walls", tileset);
+
+    map.createLayer("Ground", tileset as Phaser.Tilemaps.Tileset);
+
+    this.wallsLayer = map.createLayer("Walls", tileset as Phaser.Tilemaps.Tileset)!;
 
     this.wallsLayer.setCollisionByProperty({ collides: true });
 
@@ -47,8 +48,7 @@ export default class Game extends Phaser.Scene {
 
     //Cameras Settings-------------------------------------------
     this.cameras.main.startFollow(hero, true);
-    //
-    // this.cameras.main.setBounds(0, 0, width, height);
+
   }
 
   // Debugging Collision Method----------------------------------

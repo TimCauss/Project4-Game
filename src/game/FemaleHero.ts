@@ -1,4 +1,4 @@
-import Phaser, { Scene } from "phaser";
+import Phaser from "phaser";
 
 import TextureKeys from "../consts/TextureKeys";
 import AnimationKeys from "../consts/AnimationKeys";
@@ -7,12 +7,13 @@ import AnimationKeys from "../consts/AnimationKeys";
 export default class FemaleHero extends Phaser.GameObjects.Container {
   //Private declarations:
   private cursors!: Phaser.Types.Input.Keyboard.CursorKeys;
-  private femaleHero: Phaser.GameObjects.Sprite;
+  private femaleHero!: Phaser.GameObjects.Sprite;
 
   constructor(scene: Phaser.Scene, x: number, y: number) {
     super(scene, x, y);
 
     //Get CursorKeys Instance
+    if (!scene.input.keyboard) return;
     this.cursors = scene.input.keyboard.createCursorKeys();
 
     //Create FemaleHero Sprite:
@@ -40,7 +41,6 @@ export default class FemaleHero extends Phaser.GameObjects.Container {
     const body = this.body as Phaser.Physics.Arcade.Body;
 
     //KEYBOARD INPUT START:----------------------------------------------
-    //
     //Speed setting:
     const walkSpeed = 50;
     const runSpeed = walkSpeed * 1.75;
@@ -69,9 +69,7 @@ export default class FemaleHero extends Phaser.GameObjects.Container {
         this.femaleHero.anims.play(AnimationKeys.fHeroRunSide, true);
         body.setVelocity(runSpeed, 0);
       } else {
-        //Launch animation
         this.femaleHero.anims.play(AnimationKeys.fHeroWalkSide, true);
-        //Set velocity to left
         body.setVelocityX(walkSpeed);
       }
       //UP
@@ -95,6 +93,7 @@ export default class FemaleHero extends Phaser.GameObjects.Container {
         body.setVelocityY(walkSpeed);
       }
     } else {
+      if (!this.femaleHero.anims.currentAnim) return;
       const parts = this.femaleHero.anims.currentAnim.key.split("-");
       parts[1] = "idle";
       body.setVelocity(0, 0);

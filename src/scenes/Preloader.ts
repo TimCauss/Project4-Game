@@ -2,7 +2,6 @@ import Phaser from "phaser";
 import SceneKeys from "../consts/SceneKeys";
 import TextureKeys from "../consts/TextureKeys";
 import MapKeys from "../consts/MapKeys";
-import AnimationKeys from "../consts/AnimationKeys";
 
 // anims import Start---------------------------------
 import { createLizardAnims } from "../anims/EnemyAnims";
