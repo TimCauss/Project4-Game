@@ -23,7 +23,17 @@ export default class Preloader extends Phaser.Scene {
   }
 
   create() {
-
+    //FemaleHero Animation IDLE:---------------------------------------
+    this.anims.create({
+      key: AnimationKeys.fHeroIdle,
+      //generate frame:
+      frames: [
+        {
+          key: TextureKeys.FemaleHero,
+          frame: "idle.png",
+        },
+      ],
+    });
 
     //Launching Scene:--------------------------------------------------
     this.scene.start(SceneKeys.Game);
