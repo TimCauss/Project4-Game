@@ -9,6 +9,14 @@ enum Direction {
   RIGHT,
 }
 
+const randDirection = (exclude: Direction) => {
+  let newDirection = Phaser.Math.Between(0, 3);
+  while (newDirection === exclude) {
+    newDirection = Phaser.Math.Between(0, 3);
+  }
+  return newDirection;
+};
+
 export default class LizardGreen extends Phaser.Physics.Arcade.Sprite {
   private direction = Direction.LEFT;
 
@@ -47,8 +55,8 @@ export default class LizardGreen extends Phaser.Physics.Arcade.Sprite {
     if (go !== this) {
       return;
     }
-    const newDirection = Phaser.Math.Between(0, 3);
-    this.direction = newDirection;
+
+    this.direction = randDirection(this.direction);
   }
 
   preUpdate(t: number, dt: number) {
