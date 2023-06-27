@@ -54,20 +54,25 @@ Production files will be placed in the `dist` folder. Then upload those files to
     ├── node_modules
     ├── public
     │   ├── images
-    │   │   ├── tilemap.png      // Tiled tilemap image
+    │   │   ├── HeroFemaleSprite.json   // TexturePacker JSON file
+    │   │   ├── HeroFemaleSprite.png    // TexturePacker image
+    │   │   ├── tilemap.png             // Tiled tilemap image
     │   ├── map
-    │   │   ├── dungeon01.json   // Tiled JSON file
-    │   │   ├── map.tmx          // Tiled TMX file
+    │   │   ├── dungeon01.json          // Tiled JSON file
+    │   │   ├── map.tmx                 // Tiled TMX file
     ├── src
     │   ├──consts
-    │   │  ├── MapKeys.ts        // Maps keys enum
-    │   │  ├── SceneKeys.ts      // Scenes keys enum
-    │   │  ├── TextureKeys.ts    // Textures keys enum
+    │   │  ├── AnimationKeys.ts         // Animations keys enum
+    │   │  ├── MapKeys.ts               // Maps keys enum
+    │   │  ├── SceneKeys.ts             // Scenes keys enum
+    │   │  ├── TextureKeys.ts           // Textures keys enum
+    │   ├──game
+    │   │  ├── FemaleHero.ts            // Female Hero class
     │   ├──scenes
-    │   │  ├── Game.ts           // Main game scene
-    │   ├── main.ts              // Entry point
-	├── index.html               // Main HTML file
-    ├── package.json             // NPM package file
+    │   │  ├── Game.ts                  // Main game scene
+    │   ├── main.ts                     // Entry point
+	├── index.html                        // Main HTML file
+    ├── package.json                    // NPM package file
 ```
 
 TypeScript files are intended for the `src` folder. `main.ts` is the entry point referenced by `index.html`.
@@ -140,4 +145,38 @@ private collisonDebug(enabled: boolean) {
       });
     }
   }
+```
+
+## Female Hero Animations:
+
+You can find all the animations in the Preloader.ts file in the create() method
+
+```js
+//FemaleHero Animation START---------------------------------------
+    //IDLE:------------------------------------------------------------
+    this.anims.create({
+      key: AnimationKeys.fHeroIdle,
+      //generate frame:
+      frames: [
+        {
+          key: TextureKeys.FemaleHero,
+          frame: "idle.png",
+        },
+      ],
+    });
+
+    //WALK DOWN:-------------------------------------------------------
+    this.anims.create({
+      key: AnimationKeys.fHeroWalkDown,
+      //generate frames:
+      frames: this.anims.generateFrameNames(TextureKeys.FemaleHero, {
+        start: 1,
+        end: 8,
+        prefix: "walk-down-",
+        suffix: ".png",
+      }),
+      frameRate: 10,
+      repeat: -1,
+    });
+    //...
 ```
