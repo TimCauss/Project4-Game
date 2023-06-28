@@ -19,6 +19,7 @@ const randDirection = (exclude: Direction) => {
 
 export default class LizardGreen extends Phaser.Physics.Arcade.Sprite {
   private direction = Direction.LEFT;
+  private moveEvent: Phaser.Time.TimerEvent;
 
   constructor(
     scene: Phaser.Scene,
@@ -40,12 +41,28 @@ export default class LizardGreen extends Phaser.Physics.Arcade.Sprite {
       this
     );
 
+    //Event based on time:
+    //Call randDirection every 2000ms
+    this.moveEvent = scene.time.addEvent({
+      delay: 2000,
+      loop: true,
+      callback: () => {
+        this.direction = randDirection(this.direction);
+      },
+    });
+
     //Physics
     const body = this.body as Phaser.Physics.Arcade.Body;
     body.onCollide = true;
     body.debugBodyColor = 0xff0000;
     body.setSize(this.width, this.height * 0.8);
     body.setOffset(this.width * 0.05, this.height * 0.25);
+  }
+
+  //destroy method in case of scene changement:
+  destroy(fromScene?: boolean) {
+    this.moveEvent.destroy();
+    super.destroy(fromScene);
   }
 
   private handleTileCollision(
@@ -63,9 +80,9 @@ export default class LizardGreen extends Phaser.Physics.Arcade.Sprite {
     super.preUpdate(t, dt);
 
     //Speed setting:
-    const speed = 50;
+    const speed = 60;
 
-    //Movement velocity:
+    //Movement settings:
     switch (this.direction) {
       case Direction.RIGHT:
         this.scaleX = 1;

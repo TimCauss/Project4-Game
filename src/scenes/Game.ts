@@ -46,17 +46,22 @@ export default class Game extends Phaser.Scene {
     //Adding GREEN LIZARDS :--------------------------------------
     const lizards = this.physics.add.group({
       classType: LizardGreen,
-
     });
     lizards.get(width * 0.5, height * 0.5, "lizard");
 
     // Collider Settings-----------------------------------------
     this.physics.add.collider(lizards, this.wallsLayer);
     this.physics.add.collider(hero, this.wallsLayer);
+    this.physics.add.collider(hero, lizards);
 
     //Cameras Settings-------------------------------------------
     this.cameras.main.startFollow(hero, true);
   }
+
+  private handleHeroLizardCollision() {
+    
+  }
+
 
   // Debugging Collision Method----------------------------------
   private collisonDebug(enabled: boolean) {
