@@ -15,6 +15,8 @@ export default class Game extends Phaser.Scene {
   private wallsLayer!: Phaser.Tilemaps.TilemapLayer;
   private hero!: Phaser.Physics.Arcade.Sprite;
 
+  private hit = 0
+
   constructor() {
     super(SceneKeys.Game);
   }
@@ -50,7 +52,7 @@ export default class Game extends Phaser.Scene {
     //Adding HERO:-----------------------------------------------
     this.hero = this.add.fhero(231, 48, HeroAnimsKeys.fHeroIdleDown);
 
-    //Adding GREEN LIZARDS :--------------------------------------
+    //Adding GREEN LIZARDS :-------------------------------------
     const lizards = this.physics.add.group({
       classType: LizardGreen,
     });
@@ -65,20 +67,46 @@ export default class Game extends Phaser.Scene {
     // this.cameras.main.startFollow(hero, true);
   }
 
+  private handleHeroLizardCollision(
+    obj1: Phaser.GameObjects.GameObject,
+    obj2: Phaser.GameObjects.GameObject
+  ) {
+    const lizard = obj2 as LizardGreen;
+
+    const dx = this.hero.x - lizard.x;
+    const dy = this.hero.y - lizard.y;
+
+    const dir = new Phaser.Math.Vector2(dx, dy).normalize().scale(200);
+
+    this.hero.setVelocity(dir.x, dir.y);
+    this.hit = 1
+  }
+
   update() {
-    //KEYBOARD INPUT START:----------------------------------------------
+    //KEYBOARD INPUT START:--------------------------------------
     //Speed setting:
     const walkSpeed = 50;
     const runSpeed = walkSpeed * 1.75;
+
+    if (this.hit > 0) {
+      ++this.hit
+      if (this.hit > 50) {
+        this.hit = 0
+      }
+      return
+    }
 
     if (!this.cursors) {
       return;
     }
 
+    const heroBody = this.hero.body as Phaser.Physics.Arcade.Body;
+
     //LEFT(Walk & Run):
     if (this.cursors.left?.isDown) {
       //Return sprite:
       this.hero.scaleX = -1;
+      heroBody.setOffset(23, this.hero.height * 0.22);
       if (this.cursors.shift?.isDown) {
         this.hero.anims.play(HeroAnimsKeys.fHeroRunSide, true);
         this.hero.setVelocity(-runSpeed, 0);
@@ -91,6 +119,7 @@ export default class Game extends Phaser.Scene {
       //RIGHT
     } else if (this.cursors.right?.isDown) {
       this.hero.scaleX = 1;
+      heroBody.setOffset(this.hero.width * 0.22, this.hero.height * 0.22);
       if (this.cursors.shift?.isDown) {
         this.hero.anims.play(HeroAnimsKeys.fHeroRunSide, true);
         this.hero.setVelocity(runSpeed, 0);
@@ -101,6 +130,7 @@ export default class Game extends Phaser.Scene {
       //UP
     } else if (this.cursors.up?.isDown) {
       this.hero.scaleX = 1;
+      heroBody.setOffset(this.hero.width * 0.22, this.hero.height * 0.22);
       if (this.cursors.shift?.isDown) {
         this.hero.anims.play(HeroAnimsKeys.fHeroRunUp, true);
         this.hero.setVelocity(0, -runSpeed);
@@ -111,6 +141,7 @@ export default class Game extends Phaser.Scene {
       //DOWN
     } else if (this.cursors.down?.isDown) {
       this.hero.scaleX = 1;
+      heroBody.setOffset(this.hero.width * 0.22, this.hero.height * 0.22);
       if (this.cursors.shift?.isDown) {
         this.hero.anims.play(HeroAnimsKeys.fHeroRunDown, true);
         this.hero.setVelocity(0, runSpeed);
@@ -125,21 +156,7 @@ export default class Game extends Phaser.Scene {
       this.hero.setVelocity(0, 0);
       this.hero.play(parts.join("-"));
     }
-    //KEYBOARD INPUT END-----------------------------------------------
-  }
-
-  private handleHeroLizardCollision(
-    obj1: Phaser.GameObjects.GameObject,
-    obj2: Phaser.GameObjects.GameObject
-  ) {
-    const lizard = obj2 as LizardGreen;
-
-    const dx = this.hero.x - lizard.x;
-    const dy = (this.hero.y = lizard.y);
-
-    const dir = new Phaser.Math.Vector2(dx, dy).normalize().scale(200);
-
-    this.hero.setVelocity(dir.x, dir.y);
+    //KEYBOARD INPUT END-----------------------------------------
   }
 
   // Debugging Collision Method----------------------------------

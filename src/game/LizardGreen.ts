@@ -67,7 +67,7 @@ export default class LizardGreen extends Phaser.Physics.Arcade.Sprite {
 
   private handleTileCollision(
     go: Phaser.GameObjects.GameObject,
-    tile: Phaser.Tilemaps.Tile
+    // tile: Phaser.Tilemaps.Tile
   ) {
     if (go !== this) {
       return;

@@ -37,7 +37,8 @@ export default class FemaleHero extends Phaser.Physics.Arcade.Sprite {
     //Adjusting physics body (hitbox)size, color and offset:
     const body = this.body as Phaser.Physics.Arcade.Body;
     body.debugBodyColor = 0x3cda15;
-    body.setSize(17, this.height * 0.6);
+    body.setSize(17, this.height * 0.7);
+    body.setOffset(this.width*0.22, this.height*0.22);
     //TODO Change HitBox Position
 
   }
