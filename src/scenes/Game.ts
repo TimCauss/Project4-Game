@@ -133,7 +133,7 @@ export default class Game extends Phaser.Scene {
       //Return sprite:
       this.hero.scaleX = -1;
       heroBody.setOffset(23, this.hero.height * 0.22);
-      if (this.cursors.shift?.isDown && this.hero.power > 10) {
+      if (this.cursors.shift?.isDown && this.hero.power > 0) {
         this.hero.anims.play(HeroAnimsKeys.fHeroRunSide, true);
         this.hero.power -= 0.5;
         this.hero.setVelocity(-runSpeed, 0);
@@ -159,7 +159,7 @@ export default class Game extends Phaser.Scene {
     } else if (this.cursors.up?.isDown) {
       this.hero.scaleX = 1;
       heroBody.setOffset(this.hero.width * 0.22, this.hero.height * 0.22);
-      if (this.cursors.shift?.isDown && this.hero.power > 10) {
+      if (this.cursors.shift?.isDown && this.hero.power > 0) {
         this.hero.anims.play(HeroAnimsKeys.fHeroRunUp, true);
         this.hero.power -= 0.5;
         this.hero.setVelocity(0, -runSpeed);
@@ -171,7 +171,7 @@ export default class Game extends Phaser.Scene {
     } else if (this.cursors.down?.isDown) {
       this.hero.scaleX = 1;
       heroBody.setOffset(this.hero.width * 0.22, this.hero.height * 0.22);
-      if (this.cursors.shift?.isDown && this.hero.power > 10) {
+      if (this.cursors.shift?.isDown && this.hero.power > 0) {
         this.hero.anims.play(HeroAnimsKeys.fHeroRunDown, true);
         this.hero.power -= 0.5;
         this.hero.setVelocity(0, runSpeed);
