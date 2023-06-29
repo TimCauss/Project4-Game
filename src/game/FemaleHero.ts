@@ -29,7 +29,7 @@ export default class FemaleHero extends Phaser.Physics.Arcade.Sprite {
     super(scene, x, y, texture, frame);
 
     //
-    this.anims.play(HeroAnimsKeys.fHeroRunSide);
+    this.anims.play(HeroAnimsKeys.fHeroIdleDown);
 
     //Creating Physics
     scene.physics.add.existing(this);
@@ -39,7 +39,6 @@ export default class FemaleHero extends Phaser.Physics.Arcade.Sprite {
     body.debugBodyColor = 0x3cda15;
     body.setSize(17, this.height * 0.7);
     body.setOffset(this.width*0.22, this.height*0.22);
-    //TODO Change HitBox Position
 
   }
 

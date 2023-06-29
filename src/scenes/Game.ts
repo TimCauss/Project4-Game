@@ -76,9 +76,10 @@ export default class Game extends Phaser.Scene {
     const dx = this.hero.x - lizard.x;
     const dy = this.hero.y - lizard.y;
 
-    const dir = new Phaser.Math.Vector2(dx, dy).normalize().scale(200);
+    const dir = new Phaser.Math.Vector2(dx, dy).normalize().scale(250);
 
     this.hero.setVelocity(dir.x, dir.y);
+    this.hero.tint = 0xFF0000
     this.hit = 1
   }
 
@@ -90,8 +91,9 @@ export default class Game extends Phaser.Scene {
 
     if (this.hit > 0) {
       ++this.hit
-      if (this.hit > 50) {
+      if (this.hit > 5) {
         this.hit = 0
+        this.hero.clearTint()
       }
       return
     }
