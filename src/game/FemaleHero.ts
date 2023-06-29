@@ -18,6 +18,8 @@ declare global {
 //Preparing First Hero Class:
 export default class FemaleHero extends Phaser.Physics.Arcade.Sprite {
   //Private declarations:
+  private power = 100;
+  private powerBar: Phaser.GameObjects.Graphics;
 
   constructor(
     scene: Phaser.Scene,
@@ -38,7 +40,7 @@ export default class FemaleHero extends Phaser.Physics.Arcade.Sprite {
     const body = this.body as Phaser.Physics.Arcade.Body;
     body.debugBodyColor = 0x3cda15;
     body.setSize(17, this.height * 0.7);
-    body.setOffset(this.width*0.22, this.height*0.22);
+    body.setOffset(this.width * 0.22, this.height * 0.22);
 
   }
 

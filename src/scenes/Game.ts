@@ -14,6 +14,7 @@ export default class Game extends Phaser.Scene {
   private cursors!: Phaser.Types.Input.Keyboard.CursorKeys;
   private wallsLayer!: Phaser.Tilemaps.TilemapLayer;
   private hero!: Phaser.Physics.Arcade.Sprite;
+  private powerBar!: Phaser.GameObjects.Graphics;
 
   private hit = 0
 
@@ -27,8 +28,7 @@ export default class Game extends Phaser.Scene {
 
   create() {
     //store the width and height of the game screen:
-    const width = this.scale.width;
-    const height = this.scale.height;
+
 
     // Creating tilemap instance using .make.timeMap() method
     const map = this.make.tilemap({ key: MapKeys.Level1 });
@@ -51,12 +51,30 @@ export default class Game extends Phaser.Scene {
 
     //Adding HERO:-----------------------------------------------
     this.hero = this.add.fhero(231, 48, HeroAnimsKeys.fHeroIdleDown);
+    this.powerBar = this.makeBar(0, 0, 0xEE9933);
+    this.setValue(this.powerBar, 100);
 
     //Adding GREEN LIZARDS :-------------------------------------
     const lizards = this.physics.add.group({
       classType: LizardGreen,
     });
-    lizards.get(width * 0.5, height * 0.5, "lizard");
+
+    let i;
+    for (i = 0; i < 5; ++i) {
+      lizards.get(Phaser.Math.Between(10, 300), Phaser.Math.Between(10, 300));
+    }
+
+    this.time.addEvent({
+      delay: 1,
+      loop: true,
+      callback: () => {
+        if (this.hero.power < 100) {
+          this.hero.power += 0.1;
+        }
+      },
+    });
+
+    console.log(this.hero);
 
     // Collider Settings-----------------------------------------
     this.physics.add.collider(lizards, this.wallsLayer);
@@ -65,6 +83,8 @@ export default class Game extends Phaser.Scene {
 
     //Cameras Settings-------------------------------------------
     // this.cameras.main.startFollow(hero, true);
+
+
   }
 
   private handleHeroLizardCollision(
@@ -83,11 +103,15 @@ export default class Game extends Phaser.Scene {
     this.hit = 1
   }
 
+
   update() {
     //KEYBOARD INPUT START:--------------------------------------
     //Speed setting:
     const walkSpeed = 50;
     const runSpeed = walkSpeed * 1.75;
+
+    //Scale setValur to this.hero.power
+    this.setValue(this.powerBar, this.hero.power, 100);
 
     if (this.hit > 0) {
       ++this.hit
@@ -109,8 +133,9 @@ export default class Game extends Phaser.Scene {
       //Return sprite:
       this.hero.scaleX = -1;
       heroBody.setOffset(23, this.hero.height * 0.22);
-      if (this.cursors.shift?.isDown) {
+      if (this.cursors.shift?.isDown && this.hero.power > 10) {
         this.hero.anims.play(HeroAnimsKeys.fHeroRunSide, true);
+        this.hero.power -= 0.5;
         this.hero.setVelocity(-runSpeed, 0);
       } else {
         //Launch animation
@@ -122,8 +147,9 @@ export default class Game extends Phaser.Scene {
     } else if (this.cursors.right?.isDown) {
       this.hero.scaleX = 1;
       heroBody.setOffset(this.hero.width * 0.22, this.hero.height * 0.22);
-      if (this.cursors.shift?.isDown) {
+      if (this.cursors.shift?.isDown && this.hero.power > 10) {
         this.hero.anims.play(HeroAnimsKeys.fHeroRunSide, true);
+        this.hero.power -= 0.5;
         this.hero.setVelocity(runSpeed, 0);
       } else {
         this.hero.anims.play(HeroAnimsKeys.fHeroWalkSide, true);
@@ -133,8 +159,9 @@ export default class Game extends Phaser.Scene {
     } else if (this.cursors.up?.isDown) {
       this.hero.scaleX = 1;
       heroBody.setOffset(this.hero.width * 0.22, this.hero.height * 0.22);
-      if (this.cursors.shift?.isDown) {
+      if (this.cursors.shift?.isDown && this.hero.power > 10) {
         this.hero.anims.play(HeroAnimsKeys.fHeroRunUp, true);
+        this.hero.power -= 0.5;
         this.hero.setVelocity(0, -runSpeed);
       } else {
         this.hero.anims.play(HeroAnimsKeys.fHeroWalkUp, true);
@@ -144,8 +171,9 @@ export default class Game extends Phaser.Scene {
     } else if (this.cursors.down?.isDown) {
       this.hero.scaleX = 1;
       heroBody.setOffset(this.hero.width * 0.22, this.hero.height * 0.22);
-      if (this.cursors.shift?.isDown) {
+      if (this.cursors.shift?.isDown && this.hero.power > 10) {
         this.hero.anims.play(HeroAnimsKeys.fHeroRunDown, true);
+        this.hero.power -= 0.5;
         this.hero.setVelocity(0, runSpeed);
       } else {
         this.hero.anims.play(HeroAnimsKeys.fHeroWalkDown, true);
@@ -171,5 +199,35 @@ export default class Game extends Phaser.Scene {
         faceColor: new Phaser.Display.Color(40, 39, 37, 255),
       });
     }
+  }
+
+  private makeBar(x: number, y: number, color: number) {
+    //draw the bar
+    let barBg = this.add.graphics();
+    let bar = this.add.graphics();
+
+
+    //color the bar
+    bar.fillStyle(color, 1);
+    barBg.fillStyle(0x000000, 1);
+
+    //fill the bar with a rectangle
+    bar.fillRect(0, 0, 100, 5);
+    barBg.fillRect(0, 0, 100, 5);
+
+    //position the bar
+    barBg.x = x;
+    bar.x = x;
+
+    barBg.y = y;
+    bar.y = y;
+
+    //return the bar
+    return bar;
+  }
+
+  private setValue(bar: Phaser.GameObjects.Graphics, percentage: number) {
+    //scale the bar
+    bar.scaleX = percentage / 100;
   }
 }

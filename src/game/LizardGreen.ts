@@ -44,7 +44,7 @@ export default class LizardGreen extends Phaser.Physics.Arcade.Sprite {
     //Event based on time:
     //Call randDirection every 2000ms
     this.moveEvent = scene.time.addEvent({
-      delay: 2000,
+      delay: Phaser.Math.Between(1000, 10000),
       loop: true,
       callback: () => {
         this.direction = randDirection(this.direction);
