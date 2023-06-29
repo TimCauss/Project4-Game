@@ -15,6 +15,8 @@ export default class Game extends Phaser.Scene {
   private wallsLayer!: Phaser.Tilemaps.TilemapLayer;
   private hero!: Phaser.Physics.Arcade.Sprite;
   private powerBar!: Phaser.GameObjects.Graphics;
+  private bgBar!: Phaser.GameObjects.Graphics;
+  private cooldown = 3;
 
   private hit = 0
 
@@ -38,10 +40,7 @@ export default class Game extends Phaser.Scene {
 
     map.createLayer("Ground", tileset as Phaser.Tilemaps.Tileset);
 
-    this.wallsLayer = map.createLayer(
-      "Walls",
-      tileset as Phaser.Tilemaps.Tileset
-    )!;
+    this.wallsLayer = map.createLayer("Walls", tileset as Phaser.Tilemaps.Tileset)!;
 
     this.wallsLayer.setCollisionByProperty({ collides: true });
 
@@ -51,6 +50,8 @@ export default class Game extends Phaser.Scene {
 
     //Adding HERO:-----------------------------------------------
     this.hero = this.add.fhero(231, 48, HeroAnimsKeys.fHeroIdleDown);
+    //Create Bars
+    this.bgBar = this.makeBar(0, 0, 0x000000);
     this.powerBar = this.makeBar(0, 0, 0xEE9933);
     this.setValue(this.powerBar, 100);
 
@@ -59,17 +60,18 @@ export default class Game extends Phaser.Scene {
       classType: LizardGreen,
     });
 
-    let i;
-    for (i = 0; i < 5; ++i) {
-      lizards.get(Phaser.Math.Between(10, 300), Phaser.Math.Between(10, 300));
-    }
+    // let i;
+    // for (i = 0; i < 5; ++i) {
+    //   lizards.get(Phaser.Math.Between(10, 300), Phaser.Math.Between(10, 300));
+    // }
 
-    this.time.addEvent({
+    //Timer PowerBar---------------------------------------------
+    const timerPower = this.time.addEvent({
       delay: 1,
       loop: true,
       callback: () => {
         if (this.hero.power < 100) {
-          this.hero.power += 0.1;
+          this.hero.power += 0.025;
         }
       },
     });
@@ -105,6 +107,15 @@ export default class Game extends Phaser.Scene {
 
 
   update() {
+
+    //Graphics update:
+    this.bgBar.x = this.hero.x - this.hero.width / 4;
+    this.bgBar.y = this.hero.y - 15;
+    this.powerBar.x = this.hero.x - this.hero.width / 4;
+    this.powerBar.y = this.hero.y - 15;
+
+
+
     //KEYBOARD INPUT START:--------------------------------------
     //Speed setting:
     const walkSpeed = 50;
@@ -147,7 +158,7 @@ export default class Game extends Phaser.Scene {
     } else if (this.cursors.right?.isDown) {
       this.hero.scaleX = 1;
       heroBody.setOffset(this.hero.width * 0.22, this.hero.height * 0.22);
-      if (this.cursors.shift?.isDown && this.hero.power > 10) {
+      if (this.cursors.shift?.isDown && this.hero.power > 0) {
         this.hero.anims.play(HeroAnimsKeys.fHeroRunSide, true);
         this.hero.power -= 0.5;
         this.hero.setVelocity(runSpeed, 0);
@@ -203,23 +214,17 @@ export default class Game extends Phaser.Scene {
 
   private makeBar(x: number, y: number, color: number) {
     //draw the bar
-    let barBg = this.add.graphics();
     let bar = this.add.graphics();
-
 
     //color the bar
     bar.fillStyle(color, 1);
-    barBg.fillStyle(0x000000, 1);
 
     //fill the bar with a rectangle
     bar.fillRect(0, 0, 100, 5);
-    barBg.fillRect(0, 0, 100, 5);
+
 
     //position the bar
-    barBg.x = x;
     bar.x = x;
-
-    barBg.y = y;
     bar.y = y;
 
     //return the bar
