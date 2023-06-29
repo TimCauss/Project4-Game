@@ -1,5 +1,7 @@
 import Phaser from "phaser";
 
+
+
 // enum import start----------------------------------
 import TextureKeys from "../consts/TextureKeys";
 import MapKeys from "../consts/MapKeys";
@@ -9,13 +11,16 @@ import LizardGreen from "../game/LizardGreen";
 // enum import end------------------------------------
 
 import "../game/FemaleHero";
+import FemaleHero from "../game/FemaleHero";
 
 export default class Game extends Phaser.Scene {
+
+
   private cursors!: Phaser.Types.Input.Keyboard.CursorKeys;
   private wallsLayer!: Phaser.Tilemaps.TilemapLayer;
   private hero!: Phaser.Physics.Arcade.Sprite;
-  private powerBar!: Phaser.GameObjects.Graphics;
-  private bgBar!: Phaser.GameObjects.Graphics;
+  // private powerBar!: Phaser.GameObjects.Graphics;
+  // private bgBar!: Phaser.GameObjects.Graphics;
   private cooldown = 3;
 
   private hit = 0
@@ -49,11 +54,13 @@ export default class Game extends Phaser.Scene {
     // Debugging Method END--------------------------------------
 
     //Adding HERO:-----------------------------------------------
-    this.hero = this.add.fhero(231, 48, HeroAnimsKeys.fHeroIdleDown);
+    this.hero = this.add.fhero(231, 48, HeroAnimsKeys.fHeroIdleDown, undefined);
+
+    console.log(this.hero);
     //Create Bars
-    this.bgBar = this.makeBar(0, 0, 0x000000);
-    this.powerBar = this.makeBar(0, 0, 0xEE9933);
-    this.setValue(this.powerBar, 100);
+    // this.bgBar = this.makeBar(0, 0, 0x000000);
+    // this.powerBar = this.makeBar(0, 0, 0xEE9933);
+    // this.setValue(this.powerBar, 100);
 
     //Adding GREEN LIZARDS :-------------------------------------
     const lizards = this.physics.add.group({
@@ -66,17 +73,16 @@ export default class Game extends Phaser.Scene {
     // }
 
     //Timer PowerBar---------------------------------------------
-    const timerPower = this.time.addEvent({
-      delay: 1,
-      loop: true,
-      callback: () => {
-        if (this.hero.power < 100) {
-          this.hero.power += 0.025;
-        }
-      },
-    });
+    // const timerPower = this.time.addEvent({
+    //   delay: 1,
+    //   loop: true,
+    //   callback: () => {
+    //     if (this.hero.power < 100) {
+    //       this.hero.power += 0.025;
+    //     }
+    //   },
+    // });
 
-    console.log(this.hero);
 
     // Collider Settings-----------------------------------------
     this.physics.add.collider(lizards, this.wallsLayer);
@@ -84,10 +90,12 @@ export default class Game extends Phaser.Scene {
     this.physics.add.collider(this.hero, lizards, this.handleHeroLizardCollision, undefined, this);
 
     //Cameras Settings-------------------------------------------
-    // this.cameras.main.startFollow(hero, true);
+    this.cameras.main.startFollow(this.hero, true);
 
+    this.scene.launch(SceneKeys.UIBarScene, { controller: FemaleHero});
 
   }
+
 
   private handleHeroLizardCollision(
     obj1: Phaser.GameObjects.GameObject,
@@ -109,10 +117,10 @@ export default class Game extends Phaser.Scene {
   update() {
 
     //Graphics update:
-    this.bgBar.x = this.hero.x - this.hero.width / 4;
-    this.bgBar.y = this.hero.y - 15;
-    this.powerBar.x = this.hero.x - this.hero.width / 4;
-    this.powerBar.y = this.hero.y - 15;
+    // this.bgBar.x = this.hero.x - this.hero.width / 4;
+    // this.bgBar.y = this.hero.y - 15;
+    // this.powerBar.x = this.hero.x - this.hero.width / 4;
+    // this.powerBar.y = this.hero.y - 15;
 
 
 
@@ -122,7 +130,7 @@ export default class Game extends Phaser.Scene {
     const runSpeed = walkSpeed * 1.75;
 
     //Scale setValur to this.hero.power
-    this.setValue(this.powerBar, this.hero.power, 100);
+    // this.setValue(this.powerBar, this.hero.power, 100);
 
     if (this.hit > 0) {
       ++this.hit
@@ -144,9 +152,8 @@ export default class Game extends Phaser.Scene {
       //Return sprite:
       this.hero.scaleX = -1;
       heroBody.setOffset(23, this.hero.height * 0.22);
-      if (this.cursors.shift?.isDown && this.hero.power > 0) {
+      if (this.cursors.shift?.isDown) {
         this.hero.anims.play(HeroAnimsKeys.fHeroRunSide, true);
-        this.hero.power -= 0.5;
         this.hero.setVelocity(-runSpeed, 0);
       } else {
         //Launch animation
@@ -158,9 +165,8 @@ export default class Game extends Phaser.Scene {
     } else if (this.cursors.right?.isDown) {
       this.hero.scaleX = 1;
       heroBody.setOffset(this.hero.width * 0.22, this.hero.height * 0.22);
-      if (this.cursors.shift?.isDown && this.hero.power > 0) {
+      if (this.cursors.shift?.isDown) {
         this.hero.anims.play(HeroAnimsKeys.fHeroRunSide, true);
-        this.hero.power -= 0.5;
         this.hero.setVelocity(runSpeed, 0);
       } else {
         this.hero.anims.play(HeroAnimsKeys.fHeroWalkSide, true);
@@ -170,9 +176,8 @@ export default class Game extends Phaser.Scene {
     } else if (this.cursors.up?.isDown) {
       this.hero.scaleX = 1;
       heroBody.setOffset(this.hero.width * 0.22, this.hero.height * 0.22);
-      if (this.cursors.shift?.isDown && this.hero.power > 0) {
+      if (this.cursors.shift?.isDown) {
         this.hero.anims.play(HeroAnimsKeys.fHeroRunUp, true);
-        this.hero.power -= 0.5;
         this.hero.setVelocity(0, -runSpeed);
       } else {
         this.hero.anims.play(HeroAnimsKeys.fHeroWalkUp, true);
@@ -182,9 +187,8 @@ export default class Game extends Phaser.Scene {
     } else if (this.cursors.down?.isDown) {
       this.hero.scaleX = 1;
       heroBody.setOffset(this.hero.width * 0.22, this.hero.height * 0.22);
-      if (this.cursors.shift?.isDown && this.hero.power > 0) {
+      if (this.cursors.shift?.isDown) {
         this.hero.anims.play(HeroAnimsKeys.fHeroRunDown, true);
-        this.hero.power -= 0.5;
         this.hero.setVelocity(0, runSpeed);
       } else {
         this.hero.anims.play(HeroAnimsKeys.fHeroWalkDown, true);
@@ -212,27 +216,27 @@ export default class Game extends Phaser.Scene {
     }
   }
 
-  private makeBar(x: number, y: number, color: number) {
-    //draw the bar
-    let bar = this.add.graphics();
+  // private makeBar(x: number, y: number, color: number) {
+  //   //draw the bar
+  //   let bar = this.add.graphics();
 
-    //color the bar
-    bar.fillStyle(color, 1);
+  //   //color the bar
+  //   bar.fillStyle(color, 1);
 
-    //fill the bar with a rectangle
-    bar.fillRect(0, 0, 100, 5);
+  //   //fill the bar with a rectangle
+  //   bar.fillRect(0, 0, 100, 5);
 
 
-    //position the bar
-    bar.x = x;
-    bar.y = y;
+  //   //position the bar
+  //   bar.x = x;
+  //   bar.y = y;
 
-    //return the bar
-    return bar;
-  }
+  //   //return the bar
+  //   return bar;
+  // }
 
-  private setValue(bar: Phaser.GameObjects.Graphics, percentage: number) {
-    //scale the bar
-    bar.scaleX = percentage / 100;
-  }
+  // private setValue(bar: Phaser.GameObjects.Graphics, percentage: number) {
+  //   //scale the bar
+  //   bar.scaleX = percentage / 100;
+  // }
 }

@@ -1,6 +1,7 @@
 import Phaser from "phaser";
 
 import HeroAnimsKeys from "../consts/HeroAnimsKeys";
+import PowerController from "./PowerController";
 
 declare global {
   namespace Phaser.GameObjects {
@@ -16,17 +17,18 @@ declare global {
 }
 
 //Preparing First Hero Class:
-export default class FemaleHero extends Phaser.Physics.Arcade.Sprite {
+export default class FemaleHero extends Phaser.Physics.Arcade.Sprite implements PowerController {
+
   //Private declarations:
   private power = 100;
-  private powerBar: Phaser.GameObjects.Graphics;
+  private powerMax = 100;
 
   constructor(
     scene: Phaser.Scene,
     x: number,
     y: number,
     texture: string,
-    frame?: string | number
+    frame?: string | number,
   ) {
     super(scene, x, y, texture, frame);
 
@@ -42,6 +44,45 @@ export default class FemaleHero extends Phaser.Physics.Arcade.Sprite {
     body.setSize(17, this.height * 0.7);
     body.setOffset(this.width * 0.22, this.height * 0.22);
 
+
+  }
+
+  //Power Methods :
+  getPower() {
+    return this.power;
+  }
+  removePower(power: number): void {
+    this.power -= power;
+  }
+  addPower(power: number): void {
+    this.power += power;
+    if (this.power >= this.getPowerMax()) {
+      this.power = this.getPowerMax();
+    }
+  }
+  setPower(power: number): void {
+    this.power = power;
+    if (this.power >= this.getPowerMax()) {
+      this.power = this.getPowerMax();
+    }
+  }
+  getPowerMax() {
+    return this.powerMax;
+  }
+  setPowerMax(powerMax: number): void {
+    this.powerMax = powerMax;
+  }
+  getPowerPercent(): number {
+    return this.power / this.powerMax;
+  }
+  addPowerPercent(power: number): void {
+    this.power += power * this.powerMax;
+    if (this.power >= this.getPowerMax()) {
+      this.power = this.getPowerMax();
+    }
+  }
+  removePowerPercent(power: number): void {
+    this.power -= power * this.powerMax;
   }
 
 }
