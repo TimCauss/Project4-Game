@@ -12,9 +12,6 @@ import LizardGreen from "../game/LizardGreen";
 
 import "../game/FemaleHero";
 import eventsCenter from "./EventsCenter";
-import FemaleHero from "../game/FemaleHero";
-import UIBarScene from "../game/UIBarScene";
-import HeroData from "../consts/HeroData";
 
 export default class Game extends Phaser.Scene {
 
@@ -22,9 +19,6 @@ export default class Game extends Phaser.Scene {
   private cursors!: Phaser.Types.Input.Keyboard.CursorKeys;
   private wallsLayer!: Phaser.Tilemaps.TilemapLayer;
   private hero!: Phaser.Physics.Arcade.Sprite;
-  // private powerBar!: Phaser.GameObjects.Graphics;
-  // private bgBar!: Phaser.GameObjects.Graphics;
-  private cooldown = 3;
 
   private hit = 0
 
@@ -75,9 +69,25 @@ export default class Game extends Phaser.Scene {
       delay: 10,
       loop: true,
       callback: () => {
-        if (this.hero.power < 100) {
+        if (this.hero.getPower() < 100) {
           this.hero.addPowerPercent(0.005);
           this.updatePower()
+        }
+      },
+    });
+
+    //Regen HealthBar---------------------------------------------
+    const timerHealth = this.time.addEvent({
+      delay: 100,
+      loop: true,
+      callback: () => {
+        if (this.hero.getHealth() < 100) {
+          this.hero.addHealthPercent(0.001);
+          this.updateHealth()
+        }
+        if (this.hero.getHealth() > 100) {
+          this.hero.setHealth(100)
+          this.updateHealth();
         }
       },
     });
@@ -97,6 +107,10 @@ export default class Game extends Phaser.Scene {
 
   private updatePower() {
     eventsCenter.emit('updatePower', this.hero.getPower());
+  }
+
+  private updateHealth() {
+    eventsCenter.emit('updateHealth', this.hero.getHealth());
   }
 
 

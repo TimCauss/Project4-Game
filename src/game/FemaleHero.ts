@@ -23,6 +23,7 @@ export default class FemaleHero extends Phaser.Physics.Arcade.Sprite implements 
   private power = 100;
   private powerMax = 100;
   private cooldown = 0;
+  private health = 100;
 
   constructor(
     scene: Phaser.Scene,
@@ -48,7 +49,7 @@ export default class FemaleHero extends Phaser.Physics.Arcade.Sprite implements 
 
     //Hero Main  CoolDown:
     const cooldownTimer = scene.time.addEvent({
-      delay: 500,
+      delay: 1000,
       loop: true,
       callback: () => {
         if (this.cooldown > 0) {
@@ -101,6 +102,26 @@ export default class FemaleHero extends Phaser.Physics.Arcade.Sprite implements 
 
   public startCooldown(seconde: number): void {
     this.cooldown = seconde;
+  }
+
+  public getHealth() {
+    return this.health;
+  }
+
+  public setHealth(value: number): void {
+    this.health = value;
+  }
+
+  public removeHealth(value: number): void {
+    this.health -= value;
+  }
+
+  public addHealth(value: number): void {
+    this.health += value;
+  }
+
+  public addHealthPercent(value: number): void {
+    this.health += (value * this.health);
   }
 }
 
