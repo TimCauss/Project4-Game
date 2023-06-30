@@ -1,6 +1,7 @@
 import Phaser from "phaser";
 
 import EnemyAnimsKeys from "../consts/EnemyAnimsKeys";
+import EnemyDamage from "../consts/EnemyDamage";
 
 enum Direction {
   UP,
@@ -20,6 +21,7 @@ const randDirection = (exclude: Direction) => {
 export default class LizardGreen extends Phaser.Physics.Arcade.Sprite {
   private direction = Direction.LEFT;
   private moveEvent: Phaser.Time.TimerEvent;
+  private damage = EnemyDamage.lizard;
 
   constructor(
     scene: Phaser.Scene,

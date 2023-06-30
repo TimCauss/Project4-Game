@@ -16,10 +16,8 @@ declare global {
   }
 }
 
-//Preparing First Hero Class:
 export default class FemaleHero extends Phaser.Physics.Arcade.Sprite implements PowerController {
 
-  //Private declarations:
   private power = 100;
   private powerMax = 100;
   private cooldown = 0;

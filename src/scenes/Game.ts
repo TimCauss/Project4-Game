@@ -31,19 +31,14 @@ export default class Game extends Phaser.Scene {
   }
 
   create() {
-    //store the width and height of the game screen:
-
 
     // Creating tilemap instance using .make.timeMap() method
     const map = this.make.tilemap({ key: MapKeys.Level1 });
     const tileset = map.addTilesetImage("tyniDungeon", TextureKeys.Tiles);
 
     // Creating layers using .createLayer() method
-
     map.createLayer("Ground", tileset as Phaser.Tilemaps.Tileset);
-
     this.wallsLayer = map.createLayer("Walls", tileset as Phaser.Tilemaps.Tileset)!;
-
     this.wallsLayer.setCollisionByProperty({ collides: true });
 
     // Debugging Method START------------------------------------
@@ -59,10 +54,10 @@ export default class Game extends Phaser.Scene {
     const lizards = this.physics.add.group({
       classType: LizardGreen,
     });
-    // let i;
-    // for (i = 0; i < 5; ++i) {
-    //   lizards.get(Phaser.Math.Between(10, 300), Phaser.Math.Between(10, 300));
-    // }
+    let i;
+    for (i = 0; i < 1; ++i) {
+      lizards.get(Phaser.Math.Between(10, 300), Phaser.Math.Between(10, 300));
+    }
 
     //Regen PowerBar---------------------------------------------
     const timerPower = this.time.addEvent({
@@ -84,9 +79,13 @@ export default class Game extends Phaser.Scene {
         if (this.hero.getHealth() < 100) {
           this.hero.addHealthPercent(0.001);
           this.updateHealth()
-        }
+        } 
         if (this.hero.getHealth() > 100) {
           this.hero.setHealth(100)
+          this.updateHealth();
+        } 
+        if (this.hero.getHealth() <= 0) {
+          this.hero.setHealth(0)
           this.updateHealth();
         }
       },
@@ -128,6 +127,7 @@ export default class Game extends Phaser.Scene {
     this.hero.setVelocity(dir.x, dir.y);
     this.hero.tint = 0xFF0000
     this.hit = 1
+    this.hero.removeHealth(lizard.damage)
   }
 
 
