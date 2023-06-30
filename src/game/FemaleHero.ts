@@ -22,6 +22,7 @@ export default class FemaleHero extends Phaser.Physics.Arcade.Sprite implements 
   //Private declarations:
   private power = 100;
   private powerMax = 100;
+  private cooldown = 0;
 
   constructor(
     scene: Phaser.Scene,
@@ -45,46 +46,62 @@ export default class FemaleHero extends Phaser.Physics.Arcade.Sprite implements 
     body.setOffset(this.width * 0.22, this.height * 0.22);
 
 
+    //Hero Main  CoolDown:
+    const cooldownTimer = scene.time.addEvent({
+      delay: 500,
+      loop: true,
+      callback: () => {
+        if (this.cooldown > 0) {
+          this.cooldown -= 0.5;
+        } else {
+          this.cooldown = 0;
+        }
+      },
+    });
+
   }
 
   //Power Methods :
-  getPower() {
+  public getPower() {
     return this.power;
   }
-  removePower(power: number): void {
+  public removePower(power: number): void {
     this.power -= power;
   }
-  addPower(power: number): void {
+  public addPower(power: number): void {
     this.power += power;
     if (this.power >= this.getPowerMax()) {
       this.power = this.getPowerMax();
     }
   }
-  setPower(power: number): void {
+  public setPower(power: number): void {
     this.power = power;
     if (this.power >= this.getPowerMax()) {
       this.power = this.getPowerMax();
     }
   }
-  getPowerMax() {
+  public getPowerMax() {
     return this.powerMax;
   }
-  setPowerMax(powerMax: number): void {
+  public setPowerMax(powerMax: number): void {
     this.powerMax = powerMax;
   }
-  getPowerPercent(): number {
-    return this.power / this.powerMax;
+  public getPowerPercent(): number {
+    return (this.power / this.powerMax) * 100;
   }
-  addPowerPercent(power: number): void {
+  public addPowerPercent(power: number): void {
     this.power += power * this.powerMax;
     if (this.power >= this.getPowerMax()) {
       this.power = this.getPowerMax();
     }
   }
-  removePowerPercent(power: number): void {
+  public removePowerPercent(power: number): void {
     this.power -= power * this.powerMax;
   }
 
+  public startCooldown(seconde: number): void {
+    this.cooldown = seconde;
+  }
 }
 
 Phaser.GameObjects.GameObjectFactory.register("fhero", function (
