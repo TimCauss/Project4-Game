@@ -11,7 +11,10 @@ import LizardGreen from "../game/LizardGreen";
 // enum import end------------------------------------
 
 import "../game/FemaleHero";
+import eventsCenter from "./EventsCenter";
 import FemaleHero from "../game/FemaleHero";
+import UIBarScene from "../game/UIBarScene";
+import HeroData from "../consts/HeroData";
 
 export default class Game extends Phaser.Scene {
 
@@ -57,31 +60,27 @@ export default class Game extends Phaser.Scene {
     this.hero = this.add.fhero(231, 48, HeroAnimsKeys.fHeroIdleDown, undefined);
 
     console.log(this.hero);
-    //Create Bars
-    // this.bgBar = this.makeBar(0, 0, 0x000000);
-    // this.powerBar = this.makeBar(0, 0, 0xEE9933);
-    // this.setValue(this.powerBar, 100);
 
     //Adding GREEN LIZARDS :-------------------------------------
     const lizards = this.physics.add.group({
       classType: LizardGreen,
     });
-
     // let i;
     // for (i = 0; i < 5; ++i) {
     //   lizards.get(Phaser.Math.Between(10, 300), Phaser.Math.Between(10, 300));
     // }
 
-    //Timer PowerBar---------------------------------------------
-    // const timerPower = this.time.addEvent({
-    //   delay: 1,
-    //   loop: true,
-    //   callback: () => {
-    //     if (this.hero.power < 100) {
-    //       this.hero.power += 0.025;
-    //     }
-    //   },
-    // });
+    //Regen PowerBar---------------------------------------------
+    const timerPower = this.time.addEvent({
+      delay: 10,
+      loop: true,
+      callback: () => {
+        if (this.hero.power < 100) {
+          this.hero.addPowerPercent(0.005);
+          this.updatePower()
+        }
+      },
+    });
 
 
     // Collider Settings-----------------------------------------
@@ -92,8 +91,12 @@ export default class Game extends Phaser.Scene {
     //Cameras Settings-------------------------------------------
     this.cameras.main.startFollow(this.hero, true);
 
-    this.scene.launch(SceneKeys.UIBarScene, { controller: FemaleHero});
 
+    this.scene.run(SceneKeys.UIBarScene);
+  }
+
+  private updatePower() {
+    eventsCenter.emit('updatePower', this.hero.getPower());
   }
 
 
@@ -116,18 +119,16 @@ export default class Game extends Phaser.Scene {
 
   update() {
 
-    //Graphics update:
-    // this.bgBar.x = this.hero.x - this.hero.width / 4;
-    // this.bgBar.y = this.hero.y - 15;
-    // this.powerBar.x = this.hero.x - this.hero.width / 4;
-    // this.powerBar.y = this.hero.y - 15;
-
-
+    //Cooldown 
+    if (this.hero.getPower() === 0) {
+      this.hero.cooldown = 1;
+    }
 
     //KEYBOARD INPUT START:--------------------------------------
     //Speed setting:
     const walkSpeed = 50;
     const runSpeed = walkSpeed * 1.75;
+    const powerSprintUsage = 0.005;
 
     //Scale setValur to this.hero.power
     // this.setValue(this.powerBar, this.hero.power, 100);
@@ -152,8 +153,9 @@ export default class Game extends Phaser.Scene {
       //Return sprite:
       this.hero.scaleX = -1;
       heroBody.setOffset(23, this.hero.height * 0.22);
-      if (this.cursors.shift?.isDown) {
+      if (this.cursors.shift?.isDown && this.hero.getPower() > 0 && this.hero.cooldown === 0) {
         this.hero.anims.play(HeroAnimsKeys.fHeroRunSide, true);
+        this.hero.removePowerPercent(powerSprintUsage);
         this.hero.setVelocity(-runSpeed, 0);
       } else {
         //Launch animation
@@ -165,8 +167,9 @@ export default class Game extends Phaser.Scene {
     } else if (this.cursors.right?.isDown) {
       this.hero.scaleX = 1;
       heroBody.setOffset(this.hero.width * 0.22, this.hero.height * 0.22);
-      if (this.cursors.shift?.isDown) {
+      if (this.cursors.shift?.isDown && this.hero.getPower() > 0 && this.hero.cooldown === 0) {
         this.hero.anims.play(HeroAnimsKeys.fHeroRunSide, true);
+        this.hero.removePowerPercent(powerSprintUsage);
         this.hero.setVelocity(runSpeed, 0);
       } else {
         this.hero.anims.play(HeroAnimsKeys.fHeroWalkSide, true);
@@ -176,8 +179,9 @@ export default class Game extends Phaser.Scene {
     } else if (this.cursors.up?.isDown) {
       this.hero.scaleX = 1;
       heroBody.setOffset(this.hero.width * 0.22, this.hero.height * 0.22);
-      if (this.cursors.shift?.isDown) {
+      if (this.cursors.shift?.isDown && this.hero.getPower() > 0 && this.hero.cooldown === 0) {
         this.hero.anims.play(HeroAnimsKeys.fHeroRunUp, true);
+        this.hero.removePowerPercent(powerSprintUsage);
         this.hero.setVelocity(0, -runSpeed);
       } else {
         this.hero.anims.play(HeroAnimsKeys.fHeroWalkUp, true);
@@ -187,8 +191,9 @@ export default class Game extends Phaser.Scene {
     } else if (this.cursors.down?.isDown) {
       this.hero.scaleX = 1;
       heroBody.setOffset(this.hero.width * 0.22, this.hero.height * 0.22);
-      if (this.cursors.shift?.isDown) {
+      if (this.cursors.shift?.isDown && this.hero.getPower() > 0 && this.hero.cooldown === 0) {
         this.hero.anims.play(HeroAnimsKeys.fHeroRunDown, true);
+        this.hero.removePowerPercent(powerSprintUsage);
         this.hero.setVelocity(0, runSpeed);
       } else {
         this.hero.anims.play(HeroAnimsKeys.fHeroWalkDown, true);
@@ -215,28 +220,4 @@ export default class Game extends Phaser.Scene {
       });
     }
   }
-
-  // private makeBar(x: number, y: number, color: number) {
-  //   //draw the bar
-  //   let bar = this.add.graphics();
-
-  //   //color the bar
-  //   bar.fillStyle(color, 1);
-
-  //   //fill the bar with a rectangle
-  //   bar.fillRect(0, 0, 100, 5);
-
-
-  //   //position the bar
-  //   bar.x = x;
-  //   bar.y = y;
-
-  //   //return the bar
-  //   return bar;
-  // }
-
-  // private setValue(bar: Phaser.GameObjects.Graphics, percentage: number) {
-  //   //scale the bar
-  //   bar.scaleX = percentage / 100;
-  // }
 }
