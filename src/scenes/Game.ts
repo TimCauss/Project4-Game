@@ -28,6 +28,8 @@ export default class Game extends Phaser.Scene {
 
   preload() {
     this.cursors = this.input.keyboard!.createCursorKeys();
+    this.cameras.main.setZoom(2)
+    this.cameras.main.setRoundPixels(false)
   }
 
   create() {
@@ -46,7 +48,7 @@ export default class Game extends Phaser.Scene {
     // Debugging Method END--------------------------------------
 
     //Adding HERO:-----------------------------------------------
-    this.hero = this.add.fhero(231, 48, HeroAnimsKeys.fHeroIdleDown, undefined);
+    this.hero = this.add.fhero(48.5, 41.5, HeroAnimsKeys.fHeroIdleDown, undefined);
 
     console.log(this.hero);
 
@@ -56,7 +58,7 @@ export default class Game extends Phaser.Scene {
     });
     let i;
     for (i = 0; i < 1; ++i) {
-      lizards.get(Phaser.Math.Between(10, 300), Phaser.Math.Between(10, 300));
+      lizards.get(Phaser.Math.Between(169, 390), Phaser.Math.Between(36, 75));
     }
 
     //Regen PowerBar---------------------------------------------
@@ -79,11 +81,11 @@ export default class Game extends Phaser.Scene {
         if (this.hero.getHealth() < 100) {
           this.hero.addHealthPercent(0.001);
           this.updateHealth()
-        } 
+        }
         if (this.hero.getHealth() > 100) {
           this.hero.setHealth(100)
           this.updateHealth();
-        } 
+        }
         if (this.hero.getHealth() <= 0) {
           this.hero.setHealth(0)
           this.updateHealth();
@@ -166,7 +168,7 @@ export default class Game extends Phaser.Scene {
     if (this.cursors.left?.isDown) {
       //Return sprite:
       this.hero.scaleX = -1;
-      heroBody.setOffset(23, this.hero.height * 0.22);
+      heroBody.setOffset(this.hero.width * 0.70, this.hero.height * 0.45);
       if (this.cursors.shift?.isDown && this.hero.getPower() > 0 && this.hero.cooldown === 0) {
         this.hero.anims.play(HeroAnimsKeys.fHeroRunSide, true);
         this.hero.removePowerPercent(powerSprintUsage);
@@ -180,7 +182,7 @@ export default class Game extends Phaser.Scene {
       //RIGHT
     } else if (this.cursors.right?.isDown) {
       this.hero.scaleX = 1;
-      heroBody.setOffset(this.hero.width * 0.22, this.hero.height * 0.22);
+      heroBody.setOffset(this.hero.width * 0.29, this.hero.height * 0.45);
       if (this.cursors.shift?.isDown && this.hero.getPower() > 0 && this.hero.cooldown === 0) {
         this.hero.anims.play(HeroAnimsKeys.fHeroRunSide, true);
         this.hero.removePowerPercent(powerSprintUsage);
@@ -192,7 +194,7 @@ export default class Game extends Phaser.Scene {
       //UP
     } else if (this.cursors.up?.isDown) {
       this.hero.scaleX = 1;
-      heroBody.setOffset(this.hero.width * 0.22, this.hero.height * 0.22);
+      heroBody.setOffset(this.hero.width * 0.30, this.hero.height * 0.45);
       if (this.cursors.shift?.isDown && this.hero.getPower() > 0 && this.hero.cooldown === 0) {
         this.hero.anims.play(HeroAnimsKeys.fHeroRunUp, true);
         this.hero.removePowerPercent(powerSprintUsage);
@@ -204,7 +206,7 @@ export default class Game extends Phaser.Scene {
       //DOWN
     } else if (this.cursors.down?.isDown) {
       this.hero.scaleX = 1;
-      heroBody.setOffset(this.hero.width * 0.22, this.hero.height * 0.22);
+      heroBody.setOffset(this.hero.width * 0.30, this.hero.height * 0.45);
       if (this.cursors.shift?.isDown && this.hero.getPower() > 0 && this.hero.cooldown === 0) {
         this.hero.anims.play(HeroAnimsKeys.fHeroRunDown, true);
         this.hero.removePowerPercent(powerSprintUsage);
