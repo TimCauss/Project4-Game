@@ -115,6 +115,18 @@ const createHeroAnims = (anims: Phaser.Animations.AnimationManager) => {
     frameRate: 15,
     repeat: -1,
   });
+  //FAINT:------------------------------------------------------------
+  anims.create({
+    key: HeroAnimsKeys.fHeroFaint,
+    frames: anims.generateFrameNames(TextureKeys.FemaleHero, {
+      start: 1,
+      end: 4,
+      prefix: "faint-",
+      suffix: ".png",
+    }),
+    frameRate: 5,
+    repeat: 0,
+  });
   //FemaleHero Animations END-----------------------------------------
 };
 

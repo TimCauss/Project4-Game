@@ -12,15 +12,15 @@ import LizardGreen from "../game/LizardGreen";
 
 import "../game/FemaleHero";
 import eventsCenter from "./EventsCenter";
+import FemaleHero from "../game/FemaleHero";
 
 export default class Game extends Phaser.Scene {
 
 
   private cursors!: Phaser.Types.Input.Keyboard.CursorKeys;
   private wallsLayer!: Phaser.Tilemaps.TilemapLayer;
-  private hero!: Phaser.Physics.Arcade.Sprite;
+  private hero!: FemaleHero;
 
-  private hit = 0
 
   constructor() {
     super(SceneKeys.Game);
@@ -62,7 +62,7 @@ export default class Game extends Phaser.Scene {
     }
 
     //Regen PowerBar---------------------------------------------
-    const timerPower = this.time.addEvent({
+    this.time.addEvent({
       delay: 10,
       loop: true,
       callback: () => {
@@ -74,7 +74,7 @@ export default class Game extends Phaser.Scene {
     });
 
     //Regen HealthBar---------------------------------------------
-    const timerHealth = this.time.addEvent({
+    this.time.addEvent({
       delay: 100,
       loop: true,
       callback: () => {
@@ -125,23 +125,13 @@ export default class Game extends Phaser.Scene {
     const dy = this.hero.y - lizard.y;
 
     const dir = new Phaser.Math.Vector2(dx, dy).normalize().scale(250);
-
-    this.hero.setVelocity(dir.x, dir.y);
-    this.hero.tint = 0xFF0000
-    this.hit = 1
-    this.hero.removeHealth(lizard.damage)
+    eventsCenter.emit('updateHealth', this.hero.getHealth());
+    this.hero.removeHealth(lizard.damage())
+    this.hero.handleDamage(dir);
   }
 
 
   update() {
-    if (this.hit > 0) {
-      ++this.hit
-      if (this.hit > 5) {
-        this.hit = 0
-        this.hero.clearTint()
-      }
-      return
-    }
 
     if (!this.hero) {
       return

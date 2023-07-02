@@ -21,7 +21,7 @@ const randDirection = (exclude: Direction) => {
 export default class LizardGreen extends Phaser.Physics.Arcade.Sprite {
   private direction = Direction.LEFT;
   private moveEvent: Phaser.Time.TimerEvent;
-  private damage = EnemyDamage.lizard;
+  private damageValue = EnemyDamage.lizard;
 
   constructor(
     scene: Phaser.Scene,
@@ -65,6 +65,10 @@ export default class LizardGreen extends Phaser.Physics.Arcade.Sprite {
   destroy(fromScene?: boolean) {
     this.moveEvent.destroy();
     super.destroy(fromScene);
+  }
+
+  damage() {
+    return this.damageValue;
   }
 
   private handleTileCollision(
