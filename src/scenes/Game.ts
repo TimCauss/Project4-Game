@@ -134,21 +134,6 @@ export default class Game extends Phaser.Scene {
 
 
   update() {
-
-    //Cooldown 
-    if (this.hero.getPower() === 0) {
-      this.hero.cooldown = 1;
-    }
-
-    //KEYBOARD INPUT START:--------------------------------------
-    //Speed setting:
-    const walkSpeed = 50;
-    const runSpeed = walkSpeed * 1.75;
-    const powerSprintUsage = 0.005;
-
-    //Scale setValur to this.hero.power
-    // this.setValue(this.powerBar, this.hero.power, 100);
-
     if (this.hit > 0) {
       ++this.hit
       if (this.hit > 5) {
@@ -158,71 +143,12 @@ export default class Game extends Phaser.Scene {
       return
     }
 
-    if (!this.cursors) {
-      return;
+    if (!this.hero) {
+      return
     }
 
-    const heroBody = this.hero.body as Phaser.Physics.Arcade.Body;
+    this.hero.update(this.cursors)
 
-    //LEFT(Walk & Run):
-    if (this.cursors.left?.isDown) {
-      //Return sprite:
-      this.hero.scaleX = -1;
-      heroBody.setOffset(this.hero.width * 0.70, this.hero.height * 0.45);
-      if (this.cursors.shift?.isDown && this.hero.getPower() > 0 && this.hero.cooldown === 0) {
-        this.hero.anims.play(HeroAnimsKeys.fHeroRunSide, true);
-        this.hero.removePowerPercent(powerSprintUsage);
-        this.hero.setVelocity(-runSpeed, 0);
-      } else {
-        //Launch animation
-        this.hero.anims.play(HeroAnimsKeys.fHeroWalkSide, true);
-        //Set velocity to left
-        this.hero.setVelocityX(-walkSpeed);
-      }
-      //RIGHT
-    } else if (this.cursors.right?.isDown) {
-      this.hero.scaleX = 1;
-      heroBody.setOffset(this.hero.width * 0.29, this.hero.height * 0.45);
-      if (this.cursors.shift?.isDown && this.hero.getPower() > 0 && this.hero.cooldown === 0) {
-        this.hero.anims.play(HeroAnimsKeys.fHeroRunSide, true);
-        this.hero.removePowerPercent(powerSprintUsage);
-        this.hero.setVelocity(runSpeed, 0);
-      } else {
-        this.hero.anims.play(HeroAnimsKeys.fHeroWalkSide, true);
-        this.hero.setVelocityX(walkSpeed);
-      }
-      //UP
-    } else if (this.cursors.up?.isDown) {
-      this.hero.scaleX = 1;
-      heroBody.setOffset(this.hero.width * 0.30, this.hero.height * 0.45);
-      if (this.cursors.shift?.isDown && this.hero.getPower() > 0 && this.hero.cooldown === 0) {
-        this.hero.anims.play(HeroAnimsKeys.fHeroRunUp, true);
-        this.hero.removePowerPercent(powerSprintUsage);
-        this.hero.setVelocity(0, -runSpeed);
-      } else {
-        this.hero.anims.play(HeroAnimsKeys.fHeroWalkUp, true);
-        this.hero.setVelocityY(-walkSpeed);
-      }
-      //DOWN
-    } else if (this.cursors.down?.isDown) {
-      this.hero.scaleX = 1;
-      heroBody.setOffset(this.hero.width * 0.30, this.hero.height * 0.45);
-      if (this.cursors.shift?.isDown && this.hero.getPower() > 0 && this.hero.cooldown === 0) {
-        this.hero.anims.play(HeroAnimsKeys.fHeroRunDown, true);
-        this.hero.removePowerPercent(powerSprintUsage);
-        this.hero.setVelocity(0, runSpeed);
-      } else {
-        this.hero.anims.play(HeroAnimsKeys.fHeroWalkDown, true);
-        this.hero.setVelocityY(walkSpeed);
-      }
-    } else {
-      if (!this.hero.anims.currentAnim) return;
-      const parts = this.hero.anims.currentAnim.key.split("-");
-      parts[1] = "idle";
-      this.hero.setVelocity(0, 0);
-      this.hero.play(parts.join("-"));
-    }
-    //KEYBOARD INPUT END-----------------------------------------
   }
 
   // Debugging Collision Method----------------------------------
