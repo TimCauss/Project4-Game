@@ -20,6 +20,7 @@ export default class Game extends Phaser.Scene {
   private cursors!: Phaser.Types.Input.Keyboard.CursorKeys;
   private wallsLayer!: Phaser.Tilemaps.TilemapLayer;
   private hero!: FemaleHero;
+  private playerLizardsCollider?: Phaser.Physics.Arcade.Collider;
 
 
   constructor() {
@@ -97,7 +98,7 @@ export default class Game extends Phaser.Scene {
     // Collider Settings-----------------------------------------
     this.physics.add.collider(lizards, this.wallsLayer);
     this.physics.add.collider(this.hero, this.wallsLayer);
-    this.physics.add.collider(this.hero, lizards, this.handleHeroLizardCollision, undefined, this);
+    this.playerLizardsCollider = this.physics.add.collider(this.hero, lizards, this.handleHeroLizardCollision, undefined, this);
 
     //Cameras Settings-------------------------------------------
     this.cameras.main.startFollow(this.hero, true);
@@ -125,9 +126,12 @@ export default class Game extends Phaser.Scene {
     const dy = this.hero.y - lizard.y;
 
     const dir = new Phaser.Math.Vector2(dx, dy).normalize().scale(250);
-    eventsCenter.emit('updateHealth', this.hero.getHealth());
     this.hero.removeHealth(lizard.damage())
     this.hero.handleDamage(dir);
+    eventsCenter.emit('updateHealth', this.hero.getHealth());
+    if (this.hero.getHealth() <= 0) {
+      this.playerLizardsCollider?.destroy()
+    }
   }
 
 

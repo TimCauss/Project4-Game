@@ -19,6 +19,7 @@ declare global {
 enum HealthState {
   IDLE,
   DAMAGE,
+  DEAD,
 }
 
 export default class FemaleHero extends Phaser.Physics.Arcade.Sprite implements PowerController {
@@ -73,26 +74,22 @@ export default class FemaleHero extends Phaser.Physics.Arcade.Sprite implements 
   }
 
   handleDamage(dir: Phaser.Math.Vector2) {
-    if (this.getHealth() <= 0 ) {
-      return;
-    }
     if (this.healthState === HealthState.DAMAGE) {
       return;
     }
-    this.setVelocity(dir.x, dir.y)
-    this.setTint(0xf00000)
-
-    this.healthState = HealthState.DAMAGE;
-    this.damageTime = 0;
-
-    if (this.getHealth() <=0) {
+    if (this.getHealth() <= 0) {
+      this.healthState = HealthState.DEAD;
       this.anims.play(HeroAnimsKeys.fHeroFaint, true);
-      // TODO finish DIE
+      this.setVelocity(0, 0);
+    } else {
+      this.setVelocity(dir.x, dir.y)
+      this.setTint(0xf00000)
+      this.healthState = HealthState.DAMAGE;
+      this.damageTime = 0;
     }
-
   }
 
-  preUpdate(t: number, dt:number) {
+  preUpdate(t: number, dt: number) {
 
     super.preUpdate(t, dt);
 
@@ -107,25 +104,31 @@ export default class FemaleHero extends Phaser.Physics.Arcade.Sprite implements 
           this.damageTime = 0;
         }
         break;
+      case HealthState.DEAD:
+        this.setTint(0xbbbbbb);
+        break;
 
     }
   }
 
   update(cursors: Phaser.Types.Input.Keyboard.CursorKeys) {
+
+    if (this.healthState === HealthState.DAMAGE
+      || this.healthState === HealthState.DEAD) {
+      return;
+    }
+
     //Cooldown 
     if (this.getPower() === 0) {
       this.cooldown = 1;
     }
-
     //KEYBOARD INPUT START:--------------------------------------
     //Speed setting:
     const walkSpeed = 50;
     const runSpeed = walkSpeed * 1.75;
     const powerSprintUsage = 0.005;
 
-    if (this.healthState === HealthState.DAMAGE) {
-      return;
-    }
+
 
     if (!cursors) {
       return;

@@ -124,8 +124,7 @@ const createHeroAnims = (anims: Phaser.Animations.AnimationManager) => {
       prefix: "faint-",
       suffix: ".png",
     }),
-    frameRate: 5,
-    repeat: 0,
+    frameRate: 7
   });
   //FemaleHero Animations END-----------------------------------------
 };
