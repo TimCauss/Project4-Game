@@ -23,9 +23,8 @@ export default class UIBarScene extends Phaser.Scene {
     }
 
     private updateHealth(value: number) {
-        if (value <= 0) {
-            this.hpBar.width = 0;
-            this.healthText.text = 'DEAD';
+        if (value < 0) {
+            return;
         }
         this.hpBar.width = value * 2;
         this.healthText.text = Math.ceil(value).toString();
