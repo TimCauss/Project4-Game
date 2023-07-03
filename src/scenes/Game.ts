@@ -48,6 +48,12 @@ export default class Game extends Phaser.Scene {
     this.collisonDebug(false);
     // Debugging Method END--------------------------------------
 
+    // Arrows START----------------------------------------------
+    const arrows = this.physics.add.group({
+      classType: Phaser.Physics.Arcade.Image
+    })
+
+
     //Adding HERO:-----------------------------------------------
     this.hero = this.add.fhero(48.5, 41.5, HeroAnimsKeys.fHeroIdleDown, undefined);
 
@@ -97,6 +103,8 @@ export default class Game extends Phaser.Scene {
 
     // Collider Settings-----------------------------------------
     this.physics.add.collider(lizards, this.wallsLayer);
+    this.physics.add.collider(arrows, this.wallsLayer);
+    this.physics.add.collider(arrows, lizards);
     this.physics.add.collider(this.hero, this.wallsLayer);
     this.playerLizardsCollider = this.physics.add.collider(this.hero, lizards, this.handleHeroLizardCollision, undefined, this);
 
@@ -113,6 +121,13 @@ export default class Game extends Phaser.Scene {
 
   private updateHealth() {
     eventsCenter.emit('updateHealth', this.hero.getHealth());
+  }
+
+  private handleArrowLizardCollision(
+    obj1: Phaser.GameObjects.GameObject,
+    obj2: Phaser.GameObjects.GameObject) {
+    console.dir(obj1);
+    console.dir(obj2);
   }
 
 

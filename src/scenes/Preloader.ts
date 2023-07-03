@@ -29,6 +29,10 @@ export default class Preloader extends Phaser.Scene {
       "./public/images/enemies/lizard_green.png",
       "./public/images/enemies/lizard_green.json"
     );
+
+    //loading arrow Sprite----------------------------------------------
+    //C:\Users\ACS\Desktop\Code\Bomberman\public\images\0x72_DungeonTilesetII_v1.6\frames\weapon_arrow.png
+    this.load.spritesheet("arrow", "./public/images/0x72_DungeonTilesetII_v1.6/frames/weapon_arrow.png")
   }
 
   create() {
