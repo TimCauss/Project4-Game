@@ -2,6 +2,7 @@ import Phaser from "phaser";
 
 import HeroAnimsKeys from "../consts/HeroAnimsKeys";
 import PowerController from "./PowerController";
+import eventsCenter from "../scenes/EventsCenter";
 
 declare global {
   namespace Phaser.GameObjects {
@@ -74,13 +75,13 @@ export default class FemaleHero extends Phaser.Physics.Arcade.Sprite implements 
   }
 
   handleDamage(dir: Phaser.Math.Vector2) {
-    if (this.healthState === HealthState.DAMAGE) {
-      return;
-    }
     if (this.getHealth() <= 0) {
       this.healthState = HealthState.DEAD;
+      eventsCenter.emit('updateHealth', this.getHealth());
       this.anims.play(HeroAnimsKeys.fHeroFaint, true);
       this.setVelocity(0, 0);
+    } else if (this.healthState === HealthState.DAMAGE) {
+      return;
     } else {
       this.setVelocity(dir.x, dir.y)
       this.setTint(0xf00000)
