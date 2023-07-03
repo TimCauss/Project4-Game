@@ -110,7 +110,7 @@ export default class LizardGreen extends Phaser.Physics.Arcade.Sprite {
     super.preUpdate(t, dt);
 
     //Speed setting:
-    const speed = 0;
+    const speed = 60;
     this.updateHealthBarPos(this.x, this.y);
     //Movement settings:
     switch (this.direction) {
