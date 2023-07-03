@@ -17,6 +17,9 @@ export default class Preloader extends Phaser.Scene {
     this.load.image(TextureKeys.Tiles, "./public/images/tilemap.png");
     this.load.tilemapTiledJSON(MapKeys.Level1, "./public/map/dungeon01.json");
 
+    //Loading Weapons--------------------------------------------------
+    this.load.image(TextureKeys.Arrow, "./public/images/weapons/weapon_arrow.png");
+
     //Loading Female Hero Spritesheet----------------------------------
     this.load.atlas(
       TextureKeys.FemaleHero,

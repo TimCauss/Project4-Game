@@ -3,6 +3,9 @@ enum TextureKeys {
   //characters/enemies:
   FemaleHero = "female-hero",
   LizardGreen = "lizard-green",
+
+  //Weapons:
+  Arrow = "weapon-arrow",
 }
 
 export default TextureKeys;

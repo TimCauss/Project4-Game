@@ -3,6 +3,7 @@ import Phaser from "phaser";
 import HeroAnimsKeys from "../consts/HeroAnimsKeys";
 import PowerController from "./PowerController";
 import eventsCenter from "../scenes/EventsCenter";
+import TextureKeys from "../consts/TextureKeys";
 
 declare global {
   namespace Phaser.GameObjects {
@@ -36,6 +37,9 @@ export default class FemaleHero extends Phaser.Physics.Arcade.Sprite implements 
 
   private cooldown = 0;
 
+  public damage = 5/50;
+
+  private arrows?: Phaser.Physics.Arcade.Group;
 
 
   constructor(
@@ -72,6 +76,52 @@ export default class FemaleHero extends Phaser.Physics.Arcade.Sprite implements 
         }
       },
     });
+  }
+
+  private throwArrows() {
+    if (!this.arrows) {
+      return;
+    }
+
+    const parts = this.anims.currentAnim.key.split('-');
+    const direction = parts[2]
+
+    const vec = new Phaser.Math.Vector2(0, 0)
+
+    switch (direction) {
+      case 'up':
+        vec.y = -1;
+        break
+
+      case 'down':
+        vec.y = 1;
+        break
+
+      default:
+      case 'side':
+        if (this.scaleX < 0) {
+          vec.x = -1;
+        } else {
+          vec.x = 1;
+        }
+        break
+    }
+
+    //rotate the arrow
+    const angle = vec.angle()
+    const arrow = this.arrows.get(this.x, this.y, TextureKeys.Arrow) as Phaser.Physics.Arcade.Image;
+
+    arrow.setActive(true);
+    arrow.setVisible(true);
+
+    arrow.setRotation(angle)
+    arrow.setVelocity(vec.x * 300, vec.y * 300)
+
+  }
+
+
+  setArrows(arrows: Phaser.Physics.Arcade.Group) {
+    this.arrows = arrows
   }
 
   handleDamage(dir: Phaser.Math.Vector2) {
@@ -133,6 +183,10 @@ export default class FemaleHero extends Phaser.Physics.Arcade.Sprite implements 
 
     if (!cursors) {
       return;
+    }
+
+    if (Phaser.Input.Keyboard.JustDown(cursors.space)) {
+      this.throwArrows();
     }
 
     const heroBody = this.body as Phaser.Physics.Arcade.Body;

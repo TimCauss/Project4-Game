@@ -1,4 +1,5 @@
 import Phaser from "phaser";
+import eventsCenter from "../scenes/EventsCenter";
 
 import EnemyAnimsKeys from "../consts/EnemyAnimsKeys";
 import EnemyDamage from "../consts/EnemyDamage";
@@ -22,6 +23,10 @@ export default class LizardGreen extends Phaser.Physics.Arcade.Sprite {
   private direction = Direction.LEFT;
   private moveEvent: Phaser.Time.TimerEvent;
   private damageValue = EnemyDamage.lizard;
+
+
+  public _Health = 20;
+  private hpBar!: Phaser.GameObjects.Rectangle
 
   constructor(
     scene: Phaser.Scene,
@@ -59,6 +64,25 @@ export default class LizardGreen extends Phaser.Physics.Arcade.Sprite {
     body.debugBodyColor = 0xff0000;
     body.setSize(this.width, this.height * 0.8);
     body.setOffset(this.width * 0.05, this.height * 0.25);
+    this.createHealthBar()
+  }
+
+  //Health Bar:
+  createHealthBar() {
+    this.hpBar = this.scene.add.rectangle(this.x, this.y - this.height * 0.2, 20, 3, 0xff0000)
+  }
+  //Health Bar:
+  updateHealthBarPos(x: number, y: number) {
+    this.hpBar.setPosition(x, y - this.height * 0.4)
+
+  }
+
+  updateHealthBarValue(value: number) {
+    this.hpBar.width = value;
+  }
+
+  handleDamage(value: number) {
+    this._Health -= value;
   }
 
   //destroy method in case of scene changement:
@@ -86,8 +110,8 @@ export default class LizardGreen extends Phaser.Physics.Arcade.Sprite {
     super.preUpdate(t, dt);
 
     //Speed setting:
-    const speed = 60;
-
+    const speed = 0;
+    this.updateHealthBarPos(this.x, this.y);
     //Movement settings:
     switch (this.direction) {
       case Direction.RIGHT:
@@ -111,5 +135,9 @@ export default class LizardGreen extends Phaser.Physics.Arcade.Sprite {
         this.anims.play(EnemyAnimsKeys.LizardGreenRun, true);
         break;
     }
+  }
+
+  create() {
+    eventsCenter.on('takingDamage', this.updateHealthBarValue, this);
   }
 }
