@@ -126,7 +126,7 @@ export default class FemaleHero extends Phaser.Physics.Arcade.Sprite implements 
     //Speed setting:
     const walkSpeed = 50;
     const runSpeed = walkSpeed * 1.75;
-    const powerSprintUsage = 0.005;
+    const powerSprintUsage = 0.020;
 
 
 
