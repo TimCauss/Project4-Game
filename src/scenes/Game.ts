@@ -23,7 +23,7 @@ export default class Game extends Phaser.Scene {
   private playerLizardsCollider?: Phaser.Physics.Arcade.Collider;
 
   private arrows!: Phaser.Physics.Arcade.Group;
-
+  private lizards!: Phaser.Physics.Arcade.Group;
 
   constructor() {
     super(SceneKeys.Game);
@@ -60,15 +60,13 @@ export default class Game extends Phaser.Scene {
     this.hero = this.add.fhero(48.5, 41.5, HeroAnimsKeys.fHeroIdleDown, undefined);
     this.hero.setArrows(this.arrows);
 
-    console.log(this.hero);
-
     //Adding GREEN LIZARDS :-------------------------------------
-    const lizards = this.physics.add.group({
+    this.lizards = this.physics.add.group({
       classType: LizardGreen,
     });
     let i;
     for (i = 0; i < 1; ++i) {
-      lizards.get(Phaser.Math.Between(169, 390), Phaser.Math.Between(36, 75));
+      this.lizards.get(Phaser.Math.Between(199, 390), Phaser.Math.Between(36, 70));
     }
 
 
@@ -106,11 +104,11 @@ export default class Game extends Phaser.Scene {
 
 
     // Collider Settings-----------------------------------------
-    this.physics.add.collider(lizards, this.wallsLayer);
-    this.physics.add.collider(this.arrows, this.wallsLayer, this.handleArrowWallsCollision, undefined, this);
-    this.physics.add.collider(this.arrows, lizards, this.handleArrowLizardCollision, undefined, this);
+    this.physics.add.collider(this.lizards, this.wallsLayer);
+    this.physics.add.collider(this.arrows, this.wallsLayer, this.handleArrowWallsCollision as Phaser.Types.Physics.Arcade.ArcadePhysicsCallback, undefined, this);
+    this.physics.add.collider(this.arrows, this.lizards, this.handleArrowLizardCollision as Phaser.Types.Physics.Arcade.ArcadePhysicsCallback, undefined, this);
     this.physics.add.collider(this.hero, this.wallsLayer);
-    this.playerLizardsCollider = this.physics.add.collider(this.hero, lizards, this.handleHeroLizardCollision, undefined, this);
+    this.playerLizardsCollider = this.physics.add.collider(this.hero, this.lizards, this.handleHeroLizardCollision as Phaser.Types.Physics.Arcade.ArcadePhysicsCallback, undefined, this);
 
     //Cameras Settings-------------------------------------------
     this.cameras.main.startFollow(this.hero, true);
@@ -127,8 +125,10 @@ export default class Game extends Phaser.Scene {
     eventsCenter.emit('updateHealth', this.hero.getHealth());
   }
 
-  private handleArrowWallsCollision(obj1: Phaser.GameObjects.GameObject, obj2: Phaser.GameObjects.GameObject) {
-    this.arrows.killAndHide(obj1)
+  private handleArrowWallsCollision(
+    obj1: Phaser.GameObjects.GameObject,
+    obj2: Phaser.GameObjects.GameObject) {
+    obj1.destroy()
   }
 
 
@@ -136,10 +136,12 @@ export default class Game extends Phaser.Scene {
     obj1: Phaser.GameObjects.GameObject,
     obj2: Phaser.GameObjects.GameObject) {
     //obj1 = arrow
+    obj1.destroy()
     const lizard = obj2 as LizardGreen
-    lizard._Health -= this.hero.damage
-    lizard.updateHealthBarValue(lizard._Health)
-    eventsCenter.emit('takingDamage', this.hero.damage);
+    lizard.handleDamage(this.hero.damage)
+    if (lizard._Health <= 0) {
+      lizard.destroy()
+    }
   }
 
 

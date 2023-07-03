@@ -37,7 +37,7 @@ export default class FemaleHero extends Phaser.Physics.Arcade.Sprite implements 
 
   private cooldown = 0;
 
-  public damage = 5/50;
+  public damage = 5;
 
   private arrows?: Phaser.Physics.Arcade.Group;
 
@@ -83,7 +83,7 @@ export default class FemaleHero extends Phaser.Physics.Arcade.Sprite implements 
       return;
     }
 
-    const parts = this.anims.currentAnim.key.split('-');
+    const parts = this.anims.currentAnim!.key.split('-');
     const direction = parts[2]
 
     const vec = new Phaser.Math.Vector2(0, 0)
@@ -97,7 +97,7 @@ export default class FemaleHero extends Phaser.Physics.Arcade.Sprite implements 
         vec.y = 1;
         break
 
-      default:
+      
       case 'side':
         if (this.scaleX < 0) {
           vec.x = -1;
@@ -115,6 +115,8 @@ export default class FemaleHero extends Phaser.Physics.Arcade.Sprite implements 
     arrow.setVisible(true);
 
     arrow.setRotation(angle)
+    arrow.x += vec.x * 16
+    arrow.y += vec.y * 16
     arrow.setVelocity(vec.x * 300, vec.y * 300)
 
   }

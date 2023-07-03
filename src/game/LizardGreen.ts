@@ -3,6 +3,7 @@ import eventsCenter from "../scenes/EventsCenter";
 
 import EnemyAnimsKeys from "../consts/EnemyAnimsKeys";
 import EnemyDamage from "../consts/EnemyDamage";
+import FemaleHero from "./FemaleHero";
 
 enum Direction {
   UP,
@@ -26,7 +27,9 @@ export default class LizardGreen extends Phaser.Physics.Arcade.Sprite {
 
 
   public _Health = 20;
+
   private hpBar!: Phaser.GameObjects.Rectangle
+  private hpBarBg!: Phaser.GameObjects.Rectangle
 
   constructor(
     scene: Phaser.Scene,
@@ -67,22 +70,35 @@ export default class LizardGreen extends Phaser.Physics.Arcade.Sprite {
     this.createHealthBar()
   }
 
-  //Health Bar:
+  //Health Bar Create: 
   createHealthBar() {
+    this.hpBarBg = this.scene.add.rectangle(this.x, this.y - this.height * 0.2, 20 + 1, 3 + 1, 0x000000)
     this.hpBar = this.scene.add.rectangle(this.x, this.y - this.height * 0.2, 20, 3, 0xff0000)
   }
-  //Health Bar:
+
+  //Health Bar Update Position:
   updateHealthBarPos(x: number, y: number) {
+    this.hpBarBg.setPosition(x, y - this.height * 0.4)
     this.hpBar.setPosition(x, y - this.height * 0.4)
-
   }
 
-  updateHealthBarValue(value: number) {
-    this.hpBar.width = value;
-  }
-
+  //Method Handle Damage:
   handleDamage(value: number) {
+    if (this._Health <= 0) {
+      return;
+    }
     this._Health -= value;
+    this.updateHealthBarValue(this._Health)
+  }
+  //Health Bar Value Update:
+  updateHealthBarValue(value: number) {
+    if (this._Health > 0) {
+      this.hpBar.width = value;
+    } else if (this._Health <= 0) {
+      this.hpBar.destroy()
+      this.hpBarBg.destroy()
+
+    }
   }
 
   //destroy method in case of scene changement:
@@ -108,10 +124,12 @@ export default class LizardGreen extends Phaser.Physics.Arcade.Sprite {
 
   preUpdate(t: number, dt: number) {
     super.preUpdate(t, dt);
+    console.log(this._Health);
 
     //Speed setting:
     const speed = 60;
     this.updateHealthBarPos(this.x, this.y);
+
     //Movement settings:
     switch (this.direction) {
       case Direction.RIGHT:
@@ -135,9 +153,5 @@ export default class LizardGreen extends Phaser.Physics.Arcade.Sprite {
         this.anims.play(EnemyAnimsKeys.LizardGreenRun, true);
         break;
     }
-  }
-
-  create() {
-    eventsCenter.on('takingDamage', this.updateHealthBarValue, this);
   }
 }
