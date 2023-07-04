@@ -37,7 +37,7 @@ export default class UIBarScene extends Phaser.Scene {
 
         this.width = this.scale.width;
         this.height = this.scale.height;
-        const UIBackground = this.add.rectangle(0, this.height, this.width, this.height * 0.11, 0x000, 150)
+        const UIBackground = this.add.rectangle(this.width*0.35, this.height, this.width*0.3, this.height * 0.11, 0x000, 150)
         UIBackground.setOrigin(0, 1)
 
         //HEALTH BAR:

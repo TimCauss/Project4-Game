@@ -1,7 +1,6 @@
 import Phaser from "phaser";
 
 
-
 // enum import start----------------------------------
 import TextureKeys from "../consts/TextureKeys";
 import MapKeys from "../consts/MapKeys";
@@ -32,14 +31,14 @@ export default class Game extends Phaser.Scene {
     this.cursors = this.input.keyboard!.createCursorKeys();
     this.cameras.main.setZoom(2)
     this.cameras.main.setRoundPixels(false)
-    
+
   }
 
   create() {
 
     // Creating tilemap instance using .make.timeMap() method
     const map = this.make.tilemap({ key: MapKeys.Level1 });
-    const tileset = map.addTilesetImage("tyniDungeon", TextureKeys.Tiles);    
+    const tileset = map.addTilesetImage("tyniDungeon", TextureKeys.Tiles);
 
     // Creating layers using .createLayer() method
     map.createLayer("Ground", tileset as Phaser.Tilemaps.Tileset);
@@ -64,10 +63,10 @@ export default class Game extends Phaser.Scene {
     this.lizards = this.physics.add.group({
       classType: LizardGreen,
     });
-    let i;
-    for (i = 0; i < 1; ++i) {
-      this.lizards.get(Phaser.Math.Between(199, 390), Phaser.Math.Between(36, 70));
-    }
+
+    this.lizards.get(50, 180);
+    this.lizards.get(370, 250);
+
 
 
     //Regen PowerBar---------------------------------------------
