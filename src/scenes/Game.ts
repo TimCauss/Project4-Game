@@ -16,7 +16,6 @@ import FemaleHero from "../game/FemaleHero";
 
 export default class Game extends Phaser.Scene {
 
-
   private cursors!: Phaser.Types.Input.Keyboard.CursorKeys;
   private wallsLayer!: Phaser.Tilemaps.TilemapLayer;
   private hero!: FemaleHero;
@@ -33,13 +32,14 @@ export default class Game extends Phaser.Scene {
     this.cursors = this.input.keyboard!.createCursorKeys();
     this.cameras.main.setZoom(2)
     this.cameras.main.setRoundPixels(false)
+    
   }
 
   create() {
 
     // Creating tilemap instance using .make.timeMap() method
     const map = this.make.tilemap({ key: MapKeys.Level1 });
-    const tileset = map.addTilesetImage("tyniDungeon", TextureKeys.Tiles);
+    const tileset = map.addTilesetImage("tyniDungeon", TextureKeys.Tiles);    
 
     // Creating layers using .createLayer() method
     map.createLayer("Ground", tileset as Phaser.Tilemaps.Tileset);

@@ -4,6 +4,7 @@ import HeroAnimsKeys from "../consts/HeroAnimsKeys";
 import PowerController from "./PowerController";
 import eventsCenter from "../scenes/EventsCenter";
 import TextureKeys from "../consts/TextureKeys";
+import HeroDamage from "../consts/HeroDamage";
 
 declare global {
   namespace Phaser.GameObjects {
@@ -37,7 +38,7 @@ export default class FemaleHero extends Phaser.Physics.Arcade.Sprite implements 
 
   private cooldown = 0;
 
-  public damage = 5;
+  public damage = HeroDamage._HeroDamage;
 
   private arrows?: Phaser.Physics.Arcade.Group;
 
@@ -97,7 +98,7 @@ export default class FemaleHero extends Phaser.Physics.Arcade.Sprite implements 
         vec.y = 1;
         break
 
-      
+
       case 'side':
         if (this.scaleX < 0) {
           vec.x = -1;

@@ -1,5 +1,5 @@
 enum EnemyDamage {
-    lizard = 25,
+    lizard = 10,
 }
 
 export default EnemyDamage
